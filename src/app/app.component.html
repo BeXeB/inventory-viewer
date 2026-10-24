@@ -1,61 +1,27 @@
 <main class="container inventory-page flex-col">
-  <header class="page-header flex-row-between">
-    <div>
-      <p class="eyebrow">INV.BEXE.DEV</p>
-      <h1>{{ title }}</h1>
-      <p class="page-description">
-        View your chat skins and prepare a complete equipment set.
-      </p>
-    </div>
-    <span class="local-only-badge">Client-side only</span>
-  </header>
+  <div>
+    <h1>{{ title }}</h1>
+  </div>
 
   @if (errorMessage) {
     <section class="card card-no-hover message-card error-card" role="alert">
       <h2>This inventory link cannot be read</h2>
       <p>{{ errorMessage }}</p>
-      <p>Ask the streamer for a current inventory link and open it again.</p>
     </section>
   } @else if (!snapshot) {
     <section class="card card-no-hover message-card empty-state" role="status">
-      <span class="empty-state-icon" aria-hidden="true">✦</span>
       <h2>Open your inventory link</h2>
       <p>
-        Use the link posted by the stream's <code>!inventory</code> command to
-        view your skins and choose what to equip.
-      </p>
-      <p class="privacy-note">
-        Inventory data is encoded in the link itself. Anyone with the link can
-        view it; this page does not upload it to a server.
+        Use the link posted by the <code>!inventory</code> command to view your
+        skins and choose what to equip.
       </p>
     </section>
   } @else {
-    <section class="inventory-summary card card-no-hover flex-row-between">
-      <div>
-        <p class="eyebrow">YOUR COLLECTION</p>
-        <h2>
-          {{ ownedCount }} {{ ownedCount === 1 ? "skin" : "skins" }} owned
-        </h2>
-      </div>
-      <p class="summary-hint">
-        Your current equipment is preselected. Changes here are only applied
-        after you run the command in chat.
-      </p>
-    </section>
-
     <div class="flex-row viewer-columns">
       <section
         class="selection-panel card card-no-hover flex-3"
         aria-labelledby="selection-title"
       >
-        <div class="section-heading flex-row-between">
-          <div>
-            <p class="eyebrow">EQUIPMENT</p>
-            <h2 id="selection-title">Choose one skin per slot</h2>
-          </div>
-          <span class="selection-count">{{ selectedCount }} selected</span>
-        </div>
-
         @if (ownedCount === 0) {
           <p class="empty-owned-note">
             This inventory has no skins yet. You can still create a command that
@@ -148,14 +114,7 @@
         class="command-panel card card-no-hover flex-2"
         aria-labelledby="command-title"
       >
-        <p class="eyebrow">READY TO APPLY</p>
         <h2 id="command-title">Your equip command</h2>
-        <p>
-          This command replaces your complete equipment set. Empty slots will be
-          unequipped, and the bot checks ownership before applying it.
-        </p>
-
-        <label for="equip-command">Copy and run this in Twitch chat</label>
         <input
           id="equip-command"
           class="command-input"
@@ -190,11 +149,6 @@
             </ul>
           }
         </div>
-
-        <p class="privacy-note">
-          Your selection stays in this browser until you copy the command. The
-          viewer does not send it for you.
-        </p>
       </aside>
     </div>
   }
