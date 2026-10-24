@@ -206,6 +206,40 @@ h3 {
   gap: 12px;
 }
 
+.skin-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skin-preview h3 {
+  margin-bottom: 0;
+}
+
+.skin-preview-hint {
+  margin-bottom: 0;
+  color: var(--light-gray);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.skin-preview-stage {
+  overflow: hidden;
+  padding: 10px;
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  background: var(--dark-gray);
+}
+
+.preview-animation-button {
+  width: auto;
+  height: auto;
+  min-height: 32px;
+  align-self: flex-start;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+}
+
 .command-panel > p {
   margin-bottom: 2px;
   color: var(--light-gray);

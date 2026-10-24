@@ -1,0 +1,20 @@
+<p
+  #messageElement
+  class="overlay-message"
+  [class.overlay-message--border-neon]="borderStyle === 'neon'"
+  [class.overlay-message--border-ornate]="borderStyle === 'ornate'"
+  [class.overlay-message--border-starlight]="borderStyle === 'starlight'"
+  [class.overlay-message--background-split-contrast-blue]="
+    backgroundPreset === 'split-contrast-blue'
+  "
+  [style.--message-background-color]="backgroundColor"
+  [style.--message-border-color]="borderColor"
+  [style.animation-name]="entryAnimation"
+>
+  <strong [style.color]="cosmetics['username-color'] ?? defaultUsernameColor">
+    {{ displayName }}
+  </strong>
+  <span [style.color]="cosmetics['message-color'] ?? null" [style.font-family]="messageFontFamily">
+    : {{ message }}
+  </span>
+</p>

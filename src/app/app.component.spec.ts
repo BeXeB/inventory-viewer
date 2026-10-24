@@ -1,7 +1,9 @@
+import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 
 import { INVENTORY_CATALOG_ITEMS } from './inventory-catalog.generated';
 import { AppComponent } from './app.component';
+import { OverlayMessageComponent } from './shared/overlay-message/overlay-message.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -57,6 +59,55 @@ describe('AppComponent', () => {
     expect(app.selectedItemIds).toEqual(
       new Set(['mint-signature', 'starlight-frame']),
     );
+  });
+
+  it('previews the selected cosmetics and can replay the entry effect', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    const selectedItemIds = [
+      'ember-text',
+      'jetbrains-mono-font',
+      'mint-signature',
+      'starlight-frame',
+      'midnight-background',
+      'slide-entry',
+    ];
+    const link = inventoryLink(selectedItemIds, selectedItemIds);
+    app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
+    fixture.detectChanges();
+
+    const message = (fixture.nativeElement as HTMLElement).querySelector(
+      '.skin-preview-stage .overlay-message',
+    );
+    expect(message).not.toBeNull();
+    expect(message?.querySelector('strong')?.textContent?.trim()).toBe('xyz');
+    expect(message?.querySelector('span')?.textContent?.trim()).toBe(': hello');
+    expect(message?.querySelector('strong')?.getAttribute('style')).toContain(
+      'color: rgb(114, 224, 182)',
+    );
+    expect(message?.querySelector('span')?.getAttribute('style')).toContain(
+      'color: rgb(255, 115, 92)',
+    );
+    expect(
+      message?.classList.contains('overlay-message--border-starlight'),
+    ).toBeTrue();
+    expect(message?.getAttribute('style')).toContain(
+      '--message-background-color: #24303B',
+    );
+    expect(message?.getAttribute('style')).toContain(
+      'animation-name: overlay-slide-in',
+    );
+
+    const replayButton = (fixture.nativeElement as HTMLElement).querySelector(
+      '.preview-animation-button',
+    ) as HTMLButtonElement | null;
+    const preview = fixture.debugElement.query(
+      By.directive(OverlayMessageComponent),
+    ).componentInstance as OverlayMessageComponent;
+    const replaySpy = spyOn(preview, 'replayEntryEffect').and.callThrough();
+    replayButton?.click();
+    expect(replaySpy).toHaveBeenCalled();
   });
 
   it('disables unowned skins and presents malformed links as an error', () => {

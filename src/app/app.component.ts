@@ -11,6 +11,10 @@ import {
   readInventoryPayloadFromUrl,
 } from './inventory-format';
 import { INVENTORY_CATALOG_ITEMS } from './inventory-catalog.generated';
+import {
+  OverlayMessageComponent,
+  type OverlayMessageCosmetics,
+} from './shared/overlay-message/overlay-message.component';
 
 interface InventorySlotGroup {
   items: readonly InventoryCatalogItem[];
@@ -38,11 +42,13 @@ const rarityLabels: Record<InventoryCatalogItem['rarity'], string> = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OverlayMessageComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
   readonly title = 'Skin inventory';
+  readonly previewDisplayName = 'xyz';
+  readonly previewText = 'hello';
   readonly slotGroups = createSlotGroups();
   readonly catalogItems = INVENTORY_CATALOG_ITEMS;
   readonly rarityLabels = rarityLabels;
@@ -67,6 +73,14 @@ export class AppComponent implements OnInit {
     return this.catalogItems.filter((item) =>
       this.selectedItemIds.has(item.id),
     );
+  }
+
+  get selectedCosmetics(): OverlayMessageCosmetics {
+    const cosmetics: OverlayMessageCosmetics = {};
+    for (const item of this.selectedItems) {
+      cosmetics[item.cosmetic.slot] = item.cosmetic.value;
+    }
+    return cosmetics;
   }
 
   ngOnInit(): void {
