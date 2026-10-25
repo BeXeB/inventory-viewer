@@ -23,20 +23,21 @@
 }
 
 .overlay-message--border-animated::after {
-  animation: overlay-border-glow 2.8s ease-in-out infinite;
+  animation: overlay-border-glow 2.2s ease-in-out infinite;
   border: 1px solid var(--message-border-glow-color);
   border-radius: inherit;
-  box-shadow: 0 0 4px var(--message-border-glow-color);
+  box-shadow: 0 0 5px 1px var(--message-border-glow-color);
   content: '';
   inset: 0;
+  opacity: 0.7;
   pointer-events: none;
   position: absolute;
 }
 
 @keyframes overlay-border-glow {
   50% {
-    box-shadow: 0 0 12px var(--message-border-glow-color);
-    opacity: 0.55;
+    box-shadow: 0 0 16px 3px var(--message-border-glow-color);
+    opacity: 1;
   }
 }
 
