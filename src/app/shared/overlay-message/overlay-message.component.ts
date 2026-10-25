@@ -1,10 +1,6 @@
 // Canonical message renderer, synced to the inventory viewer by CI.
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-
-import {
-  INVENTORY_CATALOG_THEMES,
-  type InventoryCatalogTheme,
-} from '../../inventory-catalog.generated';
+import { isChatTheme, type ChatTheme } from '../../../../shared/contracts/lootboxes';
 
 export type OverlayMessageCosmeticSlot =
   | 'border'
@@ -13,12 +9,9 @@ export type OverlayMessageCosmeticSlot =
   | 'message-font'
   | 'username-color';
 
-export type OverlayMessageCosmetics = Partial<
-  Record<OverlayMessageCosmeticSlot, string>
->;
+export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot, string>>;
 
 type BorderStyle = 'neon' | 'ornate' | 'starlight';
-type ChatTheme = InventoryCatalogTheme;
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
@@ -46,23 +39,19 @@ const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
   forest: { background: '#173a32', color: '#e7f7ec' },
   amethyst: { background: '#302347', color: '#f4eaff' },
   'warm-ember': {
-    background:
-      'linear-gradient(110deg, #241222 0%, #3c1f31 52%, #5a2b1d 100%)',
+    background: 'linear-gradient(110deg, #241222 0%, #3c1f31 52%, #5a2b1d 100%)',
     color: '#fff1e6',
   },
   aurora: {
-    background:
-      'linear-gradient(110deg, #103746 0%, #1e4d67 50%, #342a5e 100%)',
+    background: 'linear-gradient(110deg, #103746 0%, #1e4d67 50%, #342a5e 100%)',
     color: '#e8fffa',
   },
   'sakura-sunset': {
-    background:
-      'linear-gradient(110deg, #55213f 0%, #773144 52%, #783622 100%)',
+    background: 'linear-gradient(110deg, #55213f 0%, #773144 52%, #783622 100%)',
     color: '#fff0f3',
   },
   glacier: {
-    background:
-      'linear-gradient(110deg, #0d3b5a 0%, #145a68 52%, #1e3e70 100%)',
+    background: 'linear-gradient(110deg, #0d3b5a 0%, #145a68 52%, #1e3e70 100%)',
     color: '#eefaff',
   },
   'neon-night': { background: '#111827', color: '#67e8f9' },
@@ -100,9 +89,7 @@ export class OverlayMessageComponent {
 
   get borderStyle(): BorderStyle | null {
     const border = this.cosmetics.border;
-    return border === 'neon' || border === 'ornate' || border === 'starlight'
-      ? border
-      : null;
+    return border === 'neon' || border === 'ornate' || border === 'starlight' ? border : null;
   }
 
   get borderColor(): string | null {
@@ -128,9 +115,7 @@ export class OverlayMessageComponent {
 
   get usernameColor(): string | null {
     const usernameColor = this.cosmetics['username-color'];
-    return isHexColor(usernameColor)
-      ? usernameColor
-      : this.defaultUsernameColor;
+    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
   }
 
   get usernameColorPreset(): UsernameColorPreset | null {
@@ -178,16 +163,7 @@ function isHexColor(value: string | undefined): value is `#${string}` {
   return typeof value === 'string' && /^#[\da-f]{6}$/i.test(value);
 }
 
-function isChatTheme(value: string | undefined): value is ChatTheme {
-  return (
-    typeof value === 'string' &&
-    INVENTORY_CATALOG_THEMES.some((theme) => theme === value)
-  );
-}
-
-function isUsernameColorPreset(
-  value: string | undefined,
-): value is UsernameColorPreset {
+function isUsernameColorPreset(value: string | undefined): value is UsernameColorPreset {
   return (
     value === 'gradient-cosmic' ||
     value === 'gradient-nebula' ||

@@ -1,316 +1,339 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
 export const INVENTORY_CATALOG_VERSION = 5 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
-export const INVENTORY_CATALOG_RARITIES = ["common","uncommon","rare","epic","legendary"] as const;
-export type InventoryCatalogRarity = (typeof INVENTORY_CATALOG_RARITIES)[number];
-export const INVENTORY_CATALOG_THEMES = ["ivory","cloud-blue","soft-sage","blush","midnight","deep-ocean","forest","amethyst","warm-ember","aurora","sakura-sunset","glacier","neon-night","solar-flare","cosmic-current"] as const;
+export const INVENTORY_CATALOG_RARITIES = [
+  'common',
+  'uncommon',
+  'rare',
+  'epic',
+  'legendary',
+] as const;
+export type InventoryCatalogRarity =
+  (typeof INVENTORY_CATALOG_RARITIES)[number];
+export const INVENTORY_CATALOG_THEMES = [
+  'ivory',
+  'cloud-blue',
+  'soft-sage',
+  'blush',
+  'midnight',
+  'deep-ocean',
+  'forest',
+  'amethyst',
+  'warm-ember',
+  'aurora',
+  'sakura-sunset',
+  'glacier',
+  'neon-night',
+  'solar-flare',
+  'cosmic-current',
+] as const;
 export type InventoryCatalogTheme = (typeof INVENTORY_CATALOG_THEMES)[number];
 
 export const INVENTORY_CATALOG_ITEMS = [
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "ivory"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'ivory',
     },
-    "id": "ivory-theme",
-    "name": "Elefántcsont Téma",
-    "rarity": "common"
+    id: 'ivory-theme',
+    name: 'Elefántcsont Téma',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "message-font",
-      "value": "jetbrains-mono"
+    cosmetic: {
+      slot: 'message-font',
+      value: 'jetbrains-mono',
     },
-    "id": "jetbrains-mono-font",
-    "name": "JetBrains Mono Betűtípus",
-    "rarity": "common"
+    id: 'jetbrains-mono-font',
+    name: 'JetBrains Mono Betűtípus',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "border",
-      "value": "#F0C56E"
+    cosmetic: {
+      slot: 'border',
+      value: '#F0C56E',
     },
-    "id": "gilded-edge",
-    "name": "Aranyszínű Szegély",
-    "rarity": "rare"
+    id: 'gilded-edge',
+    name: 'Aranyszínű Szegély',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "border",
-      "value": "starlight"
+    cosmetic: {
+      slot: 'border',
+      value: 'starlight',
     },
-    "id": "starlight-frame",
-    "name": "Csillagfényes Keret",
-    "rarity": "epic"
+    id: 'starlight-frame',
+    name: 'Csillagfényes Keret',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "warm-ember"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'warm-ember',
     },
-    "id": "split-contrast-theme",
-    "name": "Meleg Parázs Téma",
-    "rarity": "epic"
+    id: 'split-contrast-theme',
+    name: 'Meleg Parázs Téma',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "midnight"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'midnight',
     },
-    "id": "midnight-theme",
-    "name": "Éjféli Téma",
-    "rarity": "rare"
+    id: 'midnight-theme',
+    name: 'Éjféli Téma',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "entry-effect",
-      "value": "slide-in"
+    cosmetic: {
+      slot: 'entry-effect',
+      value: 'slide-in',
     },
-    "id": "slide-entry",
-    "name": "Becsúszás",
-    "rarity": "legendary"
+    id: 'slide-entry',
+    name: 'Becsúszás',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#74C0FC"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#74C0FC',
     },
-    "id": "sky-username",
-    "name": "Égkék Név",
-    "rarity": "common"
+    id: 'sky-username',
+    name: 'Égkék Név',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#8CE99A"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#8CE99A',
     },
-    "id": "lime-username",
-    "name": "Limezöld Név",
-    "rarity": "common"
+    id: 'lime-username',
+    name: 'Limezöld Név',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#FFD43B"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#FFD43B',
     },
-    "id": "sun-username",
-    "name": "Napsárga Név",
-    "rarity": "common"
+    id: 'sun-username',
+    name: 'Napsárga Név',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#FF8787"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#FF8787',
     },
-    "id": "rose-username",
-    "name": "Korallrózsaszín Név",
-    "rarity": "common"
+    id: 'rose-username',
+    name: 'Korallrózsaszín Név',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#22D3EE"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#22D3EE',
     },
-    "id": "turquoise-username",
-    "name": "Türkiz Név",
-    "rarity": "rare"
+    id: 'turquoise-username',
+    name: 'Türkiz Név',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#A78BFA"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#A78BFA',
     },
-    "id": "amethyst-username",
-    "name": "Ametiszt Név",
-    "rarity": "rare"
+    id: 'amethyst-username',
+    name: 'Ametiszt Név',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#FBBF24"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#FBBF24',
     },
-    "id": "gold-username",
-    "name": "Arany Név",
-    "rarity": "rare"
+    id: 'gold-username',
+    name: 'Arany Név',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "#FB7185"
+    cosmetic: {
+      slot: 'username-color',
+      value: '#FB7185',
     },
-    "id": "coral-username",
-    "name": "Lángoló Korall Név",
-    "rarity": "rare"
+    id: 'coral-username',
+    name: 'Lángoló Korall Név',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "gradient-sunset"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'gradient-sunset',
     },
-    "id": "sunset-gradient-username",
-    "name": "Naplemente Átmenet",
-    "rarity": "epic"
+    id: 'sunset-gradient-username',
+    name: 'Naplemente Átmenet',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "gradient-ocean"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'gradient-ocean',
     },
-    "id": "ocean-gradient-username",
-    "name": "Óceán Átmenet",
-    "rarity": "epic"
+    id: 'ocean-gradient-username',
+    name: 'Óceán Átmenet',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "gradient-cosmic"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'gradient-cosmic',
     },
-    "id": "cosmic-gradient-username",
-    "name": "Kozmikus Átmenet",
-    "rarity": "epic"
+    id: 'cosmic-gradient-username',
+    name: 'Kozmikus Átmenet',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "glow-aurora"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'glow-aurora',
     },
-    "id": "aurora-glow-username",
-    "name": "Északi Fény Ragyogás",
-    "rarity": "legendary"
+    id: 'aurora-glow-username',
+    name: 'Északi Fény Ragyogás',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "glow-inferno"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'glow-inferno',
     },
-    "id": "inferno-glow-username",
-    "name": "Inferno Ragyogás",
-    "rarity": "legendary"
+    id: 'inferno-glow-username',
+    name: 'Inferno Ragyogás',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "gradient-nebula"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'gradient-nebula',
     },
-    "id": "nebula-gradient-username",
-    "name": "Nebula Átmenet",
-    "rarity": "epic"
+    id: 'nebula-gradient-username',
+    name: 'Nebula Átmenet',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "username-color",
-      "value": "glow-emerald"
+    cosmetic: {
+      slot: 'username-color',
+      value: 'glow-emerald',
     },
-    "id": "emerald-glow-username",
-    "name": "Smaragd Ragyogás",
-    "rarity": "legendary"
+    id: 'emerald-glow-username',
+    name: 'Smaragd Ragyogás',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "neon-night"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'neon-night',
     },
-    "id": "neon-night-theme",
-    "name": "Neon Éjszaka Téma",
-    "rarity": "legendary"
+    id: 'neon-night-theme',
+    name: 'Neon Éjszaka Téma',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "cloud-blue"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'cloud-blue',
     },
-    "id": "cloud-blue-theme",
-    "name": "Felhőkék Téma",
-    "rarity": "common"
+    id: 'cloud-blue-theme',
+    name: 'Felhőkék Téma',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "soft-sage"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'soft-sage',
     },
-    "id": "soft-sage-theme",
-    "name": "Lágy Zsálya Téma",
-    "rarity": "common"
+    id: 'soft-sage-theme',
+    name: 'Lágy Zsálya Téma',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "blush"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'blush',
     },
-    "id": "blush-theme",
-    "name": "Púder Rózsaszín Téma",
-    "rarity": "common"
+    id: 'blush-theme',
+    name: 'Púder Rózsaszín Téma',
+    rarity: 'common',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "deep-ocean"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'deep-ocean',
     },
-    "id": "deep-ocean-theme",
-    "name": "Mély Óceán Téma",
-    "rarity": "rare"
+    id: 'deep-ocean-theme',
+    name: 'Mély Óceán Téma',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "forest"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'forest',
     },
-    "id": "forest-theme",
-    "name": "Erdei Téma",
-    "rarity": "rare"
+    id: 'forest-theme',
+    name: 'Erdei Téma',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "amethyst"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'amethyst',
     },
-    "id": "amethyst-theme",
-    "name": "Ametiszt Téma",
-    "rarity": "rare"
+    id: 'amethyst-theme',
+    name: 'Ametiszt Téma',
+    rarity: 'rare',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "aurora"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'aurora',
     },
-    "id": "aurora-theme",
-    "name": "Sarki Fény Téma",
-    "rarity": "epic"
+    id: 'aurora-theme',
+    name: 'Sarki Fény Téma',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "sakura-sunset"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'sakura-sunset',
     },
-    "id": "sakura-sunset-theme",
-    "name": "Sakura Naplemente Téma",
-    "rarity": "epic"
+    id: 'sakura-sunset-theme',
+    name: 'Sakura Naplemente Téma',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "glacier"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'glacier',
     },
-    "id": "glacier-theme",
-    "name": "Gleccser Téma",
-    "rarity": "epic"
+    id: 'glacier-theme',
+    name: 'Gleccser Téma',
+    rarity: 'epic',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "solar-flare"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'solar-flare',
     },
-    "id": "solar-flare-theme",
-    "name": "Napkitörés Téma",
-    "rarity": "legendary"
+    id: 'solar-flare-theme',
+    name: 'Napkitörés Téma',
+    rarity: 'legendary',
   },
   {
-    "cosmetic": {
-      "slot": "chat-theme",
-      "value": "cosmic-current"
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'cosmic-current',
     },
-    "id": "cosmic-current-theme",
-    "name": "Kozmikus Áramlat Téma",
-    "rarity": "legendary"
-  }
+    id: 'cosmic-current-theme',
+    name: 'Kozmikus Áramlat Téma',
+    rarity: 'legendary',
+  },
 ] as const;
