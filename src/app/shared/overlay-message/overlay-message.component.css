@@ -49,6 +49,58 @@
   );
 }
 
+.overlay-message__username--gradient-cosmic,
+.overlay-message__username--gradient-ocean,
+.overlay-message__username--gradient-sunset,
+.overlay-message__username--glow-aurora,
+.overlay-message__username--glow-inferno {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.overlay-message__username--gradient-sunset {
+  background-image: linear-gradient(90deg, #fb7185, #fbbf24);
+}
+
+.overlay-message__username--gradient-ocean {
+  background-image: linear-gradient(90deg, #22d3ee, #818cf8);
+}
+
+.overlay-message__username--gradient-cosmic {
+  background-image: linear-gradient(90deg, #c084fc, #f472b6);
+}
+
+.overlay-message__username--glow-aurora {
+  background-image: linear-gradient(90deg, #5eead4, #a78bfa, #5eead4);
+  background-size: 200% 100%;
+  animation: overlay-username-aurora 2.8s linear infinite;
+  text-shadow:
+    0 0 6px #5eead4,
+    0 0 12px #a78bfa;
+}
+
+.overlay-message__username--glow-inferno {
+  background-image: linear-gradient(90deg, #f97316, #facc15, #f43f5e, #f97316);
+  background-size: 300% 100%;
+  animation: overlay-username-inferno 2s linear infinite;
+  text-shadow:
+    0 0 6px #f97316,
+    0 0 12px #f43f5e;
+}
+
+@keyframes overlay-username-aurora {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes overlay-username-inferno {
+  to {
+    background-position: 300% 0;
+  }
+}
+
 @keyframes overlay-fade-in {
   from {
     opacity: 0;
@@ -100,7 +152,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay-message {
+  .overlay-message,
+  .overlay-message__username--glow-aurora,
+  .overlay-message__username--glow-inferno {
     animation: none !important;
   }
 }

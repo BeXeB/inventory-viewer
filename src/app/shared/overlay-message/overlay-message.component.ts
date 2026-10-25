@@ -13,6 +13,12 @@ export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot,
 
 type BorderStyle = 'neon' | 'ornate' | 'starlight';
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
+type UsernameColorPreset =
+  | 'gradient-cosmic'
+  | 'gradient-ocean'
+  | 'gradient-sunset'
+  | 'glow-aurora'
+  | 'glow-inferno';
 
 @Component({
   selector: 'app-overlay-message',
@@ -57,6 +63,16 @@ export class OverlayMessageComponent {
       : null;
   }
 
+  get usernameColor(): string | null {
+    const usernameColor = this.cosmetics['username-color'];
+    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
+  }
+
+  get usernameColorPreset(): UsernameColorPreset | null {
+    const usernameColor = this.cosmetics['username-color'];
+    return isUsernameColorPreset(usernameColor) ? usernameColor : null;
+  }
+
   get entryAnimation(): string | null {
     if (!this.animate) {
       return null;
@@ -95,4 +111,14 @@ export class OverlayMessageComponent {
 
 function isHexColor(value: string | undefined): value is `#${string}` {
   return typeof value === 'string' && /^#[\da-f]{6}$/i.test(value);
+}
+
+function isUsernameColorPreset(value: string | undefined): value is UsernameColorPreset {
+  return (
+    value === 'gradient-cosmic' ||
+    value === 'gradient-ocean' ||
+    value === 'gradient-sunset' ||
+    value === 'glow-aurora' ||
+    value === 'glow-inferno'
+  );
 }
