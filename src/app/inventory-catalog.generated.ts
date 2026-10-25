@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 6 as const;
+export const INVENTORY_CATALOG_VERSION = 7 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -200,15 +200,6 @@ export const INVENTORY_CATALOG_ITEMS = [
     id: 'midnight-theme',
     name: 'Éjféli Téma',
     rarity: 'rare',
-  },
-  {
-    cosmetic: {
-      slot: 'entry-effect',
-      value: 'slide-in',
-    },
-    id: 'slide-entry',
-    name: 'Becsúszás',
-    rarity: 'legendary',
   },
   {
     cosmetic: {

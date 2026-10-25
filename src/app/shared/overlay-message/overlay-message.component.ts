@@ -1,5 +1,5 @@
 // Canonical message renderer, synced to the inventory viewer by CI.
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   isChatBorderStyle,
   isChatTheme,
@@ -10,13 +10,11 @@ import {
 export type OverlayMessageCosmeticSlot =
   | 'border'
   | 'chat-theme'
-  | 'entry-effect'
   | 'message-font'
   | 'username-color';
 
 export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot, string>>;
 
-type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
   | 'gradient-nebula'
@@ -237,10 +235,6 @@ export class OverlayMessageComponent {
   @Input() message = '';
   @Input() defaultUsernameColor: string | null = null;
   @Input() cosmetics: OverlayMessageCosmetics = {};
-  @Input() animate = false;
-
-  @ViewChild('messageElement')
-  private messageElement?: ElementRef<HTMLParagraphElement>;
 
   get borderStyle(): ChatBorderStyle | null {
     return isChatBorderStyle(this.cosmetics.border) ? this.cosmetics.border : null;
@@ -280,41 +274,6 @@ export class OverlayMessageComponent {
   get usernameColorPreset(): UsernameColorPreset | null {
     const usernameColor = this.cosmetics['username-color'];
     return isUsernameColorPreset(usernameColor) ? usernameColor : null;
-  }
-
-  get entryAnimation(): string | null {
-    if (!this.animate) {
-      return null;
-    }
-
-    const animations: Record<EntryEffect, string> = {
-      'bounce-in': 'overlay-bounce-in',
-      'drift-up': 'overlay-drift-up',
-      'fade-in': 'overlay-fade-in',
-      'slide-in': 'overlay-slide-in',
-    };
-    const effect = this.cosmetics['entry-effect'];
-    if (
-      effect !== 'bounce-in' &&
-      effect !== 'drift-up' &&
-      effect !== 'fade-in' &&
-      effect !== 'slide-in'
-    ) {
-      return null;
-    }
-    return animations[effect];
-  }
-
-  replayEntryEffect(): void {
-    const element = this.messageElement?.nativeElement;
-    const animation = this.entryAnimation;
-    if (!element || !animation) {
-      return;
-    }
-
-    element.style.animationName = 'none';
-    void element.offsetWidth;
-    element.style.animationName = animation;
   }
 }
 

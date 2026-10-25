@@ -1,5 +1,4 @@
 <p
-  #messageElement
   class="overlay-message"
   [class.overlay-message--border-animated]="borderAppearance?.animated === true"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
@@ -15,7 +14,6 @@
   [style.--message-theme-background-inset]="borderAppearance?.themeBackgroundInset ?? null"
   [style.--message-border-glow-color]="borderAppearance?.glowColor ?? null"
   [style.--message-border-color]="borderColor"
-  [style.animation-name]="entryAnimation"
 >
   <strong
     class="overlay-message__username"

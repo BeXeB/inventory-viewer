@@ -16,9 +16,6 @@
   background-color: transparent;
   --message-theme-background-inset: 0 0 0 3px;
   box-sizing: border-box;
-  animation-duration: 460ms;
-  animation-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1);
-  animation-fill-mode: both;
 }
 
 .overlay-message--border-animated {
@@ -149,58 +146,7 @@
   }
 }
 
-@keyframes overlay-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes overlay-slide-in {
-  from {
-    opacity: 0;
-    transform: translateX(-22px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes overlay-bounce-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-18px);
-  }
-
-  65% {
-    opacity: 1;
-    transform: translateY(4px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes overlay-drift-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .overlay-message,
   .overlay-message--border-animated::after,
   .overlay-message__username--glow-aurora,
   .overlay-message__username--glow-emerald,
