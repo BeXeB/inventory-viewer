@@ -2,7 +2,6 @@ import {
   INVENTORY_CATALOG_ITEMS,
   INVENTORY_CATALOG_VERSION,
   INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION,
-  INVENTORY_LINK_FORMAT_VERSION,
 } from './inventory-catalog.generated';
 
 const base64UrlAlphabet =
@@ -30,23 +29,18 @@ export function readInventoryPayloadFromUrl(url: URL): string | null {
 export function decodeInventoryLink(encoded: string): InventorySnapshot {
   const payload = decodeBase64Url(encoded);
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  if (payload.length !== 2 + bitmapLength * 2) {
+  if (payload.length !== 1 + bitmapLength * 2) {
     throw new InventoryPayloadError(
       'This inventory link has an invalid length.',
     );
   }
-  if (payload[0] !== INVENTORY_LINK_FORMAT_VERSION) {
-    throw new InventoryPayloadError(
-      'This inventory link uses an unsupported format version.',
-    );
-  }
-  if (payload[1] !== INVENTORY_CATALOG_VERSION) {
+  if (payload[0] !== INVENTORY_CATALOG_VERSION) {
     throw new InventoryPayloadError(
       'This inventory link uses an unsupported skin catalog.',
     );
   }
 
-  const ownershipOffset = 2;
+  const ownershipOffset = 1;
   const equippedOffset = ownershipOffset + bitmapLength;
   validateUnusedBits(payload, ownershipOffset, bitmapLength);
   validateUnusedBits(payload, equippedOffset, bitmapLength);

@@ -22,16 +22,13 @@ describe('inventory payload format', () => {
     expect(() => decodeInventoryLink('AQEM=')).toThrowError(
       'This inventory link is not valid Base64url.',
     );
-    expect(() => decodeInventoryLink('AQEM')).toThrowError(
+    expect(() => decodeInventoryLink('AQE')).toThrowError(
       'This inventory link has an invalid length.',
     );
   });
 
-  it('rejects unsupported link and catalog versions', () => {
+  it('rejects an unsupported catalog version', () => {
     expect(() => decodeInventoryLink(inventoryLink([], [], 2))).toThrowError(
-      'This inventory link uses an unsupported format version.',
-    );
-    expect(() => decodeInventoryLink(inventoryLink([], [], 1, 2))).toThrowError(
       'This inventory link uses an unsupported skin catalog.',
     );
   });
@@ -84,22 +81,20 @@ describe('inventory payload format', () => {
 function inventoryLink(
   ownedItemIds: string[],
   equippedItemIds: string[],
-  formatVersion = 1,
   catalogVersion = 1,
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  const payload = new Uint8Array(2 + bitmapLength * 2);
-  payload[0] = formatVersion;
-  payload[1] = catalogVersion;
+  const payload = new Uint8Array(1 + bitmapLength * 2);
+  payload[0] = catalogVersion;
   const itemIndexes = new Map<string, number>(
     INVENTORY_CATALOG_ITEMS.map((item, index) => [item.id, index]),
   );
 
   for (const itemId of ownedItemIds) {
-    setItemBit(payload, 2, itemIndexes.get(itemId));
+    setItemBit(payload, 1, itemIndexes.get(itemId));
   }
   for (const itemId of equippedItemIds) {
-    setItemBit(payload, 2 + bitmapLength, itemIndexes.get(itemId));
+    setItemBit(payload, 1 + bitmapLength, itemIndexes.get(itemId));
   }
 
   return encodeBase64Url(payload);

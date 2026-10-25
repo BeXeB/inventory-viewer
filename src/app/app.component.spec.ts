@@ -138,18 +138,17 @@ function inventoryLink(
   equippedItemIds: string[],
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  const payload = new Uint8Array(2 + bitmapLength * 2);
+  const payload = new Uint8Array(1 + bitmapLength * 2);
   payload[0] = 1;
-  payload[1] = 1;
   const itemIndexes = new Map<string, number>(
     INVENTORY_CATALOG_ITEMS.map((item, index) => [item.id, index]),
   );
 
   for (const itemId of ownedItemIds) {
-    setItemBit(payload, 2, itemIndexes.get(itemId));
+    setItemBit(payload, 1, itemIndexes.get(itemId));
   }
   for (const itemId of equippedItemIds) {
-    setItemBit(payload, 2 + bitmapLength, itemIndexes.get(itemId));
+    setItemBit(payload, 1 + bitmapLength, itemIndexes.get(itemId));
   }
 
   return btoa(Array.from(payload, (byte) => String.fromCharCode(byte)).join(''))
