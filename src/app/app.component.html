@@ -123,22 +123,11 @@
           </p>
           <div class="skin-preview-stage">
             <app-overlay-message
-              #messagePreview
               [displayName]="previewDisplayName"
               [message]="previewText"
               [cosmetics]="selectedCosmetics"
-              [animate]="true"
             ></app-overlay-message>
           </div>
-          @if (selectedCosmetics["entry-effect"]) {
-            <button
-              class="preview-animation-button"
-              type="button"
-              (click)="messagePreview.replayEntryEffect()"
-            >
-              Replay entry effect
-            </button>
-          }
         </section>
 
         <div class="selected-summary">

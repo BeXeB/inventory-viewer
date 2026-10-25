@@ -238,15 +238,6 @@ h3 {
   background: var(--dark-gray);
 }
 
-.preview-animation-button {
-  width: auto;
-  height: auto;
-  min-height: 32px;
-  align-self: flex-start;
-  padding: 5px 10px;
-  font-size: 0.75rem;
-}
-
 .command-panel > p {
   margin-bottom: 2px;
   color: var(--light-gray);
