@@ -23,12 +23,10 @@ import {
 interface InventorySlotGroup {
   items: readonly InventoryCatalogItem[];
   label: string;
-  slot: SupportedInventorySlot;
+  slot: InventoryCosmeticSlot;
 }
 
-type SupportedInventorySlot = Exclude<InventoryCosmeticSlot, 'entry-effect'>;
-
-const slotLabels: Record<SupportedInventorySlot, string> = {
+const slotLabels: Record<InventoryCosmeticSlot, string> = {
   border: 'Message border',
   'chat-theme': 'Chat theme',
   'message-font': 'Message font',
@@ -66,11 +64,7 @@ export class AppComponent implements OnInit {
   copyMessage = '';
 
   get ownedCount(): number {
-    return this.catalogItems.filter(
-      (item) =>
-        item.cosmetic.slot !== 'entry-effect' &&
-        this.ownedItemIds.has(item.id),
-    ).length;
+    return this.ownedItemIds.size;
   }
 
   get selectedCount(): number {
@@ -79,7 +73,6 @@ export class AppComponent implements OnInit {
 
   get selectedItems(): InventoryCatalogItem[] {
     return this.catalogItems.filter((item) =>
-      item.cosmetic.slot !== 'entry-effect' &&
       this.selectedItemIds.has(item.id),
     ).sort(compareItemsByRarity);
   }
@@ -87,9 +80,6 @@ export class AppComponent implements OnInit {
   get selectedCosmetics(): OverlayMessageCosmetics {
     const cosmetics: OverlayMessageCosmetics = {};
     for (const item of this.selectedItems) {
-      if (item.cosmetic.slot === 'entry-effect') {
-        continue;
-      }
       cosmetics[item.cosmetic.slot] = item.cosmetic.value;
     }
     return cosmetics;
@@ -125,14 +115,7 @@ export class AppComponent implements OnInit {
 
     this.ownedItemIds = new Set(this.snapshot.ownedItemIds);
     this.equippedItemIds = new Set(this.snapshot.equippedItemIds);
-    this.selectedItemIds = new Set(
-      this.snapshot.equippedItemIds.filter((itemId) => {
-        const item = this.catalogItems.find(
-          (candidate) => candidate.id === itemId,
-        );
-        return item !== undefined && item.cosmetic.slot !== 'entry-effect';
-      }),
-    );
+    this.selectedItemIds = new Set(this.snapshot.equippedItemIds);
     this.updateEquipCommand();
   }
 
@@ -149,7 +132,7 @@ export class AppComponent implements OnInit {
   }
 
   selectSkin(item: InventoryCatalogItem): void {
-    if (!this.isOwned(item.id) || item.cosmetic.slot === 'entry-effect') {
+    if (!this.isOwned(item.id)) {
       return;
     }
 
@@ -212,13 +195,10 @@ export class AppComponent implements OnInit {
 }
 
 function createSlotGroups(): InventorySlotGroup[] {
-  const groups = new Map<SupportedInventorySlot, InventoryCatalogItem[]>();
+  const groups = new Map<InventoryCosmeticSlot, InventoryCatalogItem[]>();
 
   for (const item of INVENTORY_CATALOG_ITEMS) {
     const slot = item.cosmetic.slot;
-    if (slot === 'entry-effect') {
-      continue;
-    }
     const items = groups.get(slot) ?? [];
     items.push(item);
     groups.set(slot, items);
