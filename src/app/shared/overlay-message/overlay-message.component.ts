@@ -15,9 +15,11 @@ type BorderStyle = 'neon' | 'ornate' | 'starlight';
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
+  | 'gradient-nebula'
   | 'gradient-ocean'
   | 'gradient-sunset'
   | 'glow-aurora'
+  | 'glow-emerald'
   | 'glow-inferno';
 
 @Component({
@@ -116,9 +118,11 @@ function isHexColor(value: string | undefined): value is `#${string}` {
 function isUsernameColorPreset(value: string | undefined): value is UsernameColorPreset {
   return (
     value === 'gradient-cosmic' ||
+    value === 'gradient-nebula' ||
     value === 'gradient-ocean' ||
     value === 'gradient-sunset' ||
     value === 'glow-aurora' ||
+    value === 'glow-emerald' ||
     value === 'glow-inferno'
   );
 }
