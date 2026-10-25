@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 2 as const;
+export const INVENTORY_CATALOG_VERSION = 3 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -190,6 +190,24 @@ export const INVENTORY_CATALOG_ITEMS = [
     },
     id: 'inferno-glow-username',
     name: 'Inferno Ragyogás',
+    rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'gradient-nebula',
+    },
+    id: 'nebula-gradient-username',
+    name: 'Nebula Átmenet',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'glow-emerald',
+    },
+    id: 'emerald-glow-username',
+    name: 'Smaragd Ragyogás',
     rarity: 'legendary',
   },
 ] as const;
