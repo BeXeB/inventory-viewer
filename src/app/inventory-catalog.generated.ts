@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 14 as const;
+export const INVENTORY_CATALOG_VERSION = 16 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -78,10 +78,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'press-start-2p',
+      value: 'pixelify-sans',
     },
-    id: 'press-start-2p-font',
-    name: 'Press Start 2P Betűtípus',
+    id: 'pixelify-sans-font',
+    name: 'Pixelify Sans Betűtípus',
     rarity: 'common',
   },
   {
@@ -96,10 +96,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'agenda-fantasy',
+      value: 'metamorphous',
     },
-    id: 'agenda-fantasy-font',
-    name: 'Agenda Fantasy Betűtípus',
+    id: 'metamorphous-font',
+    name: 'Metamorphous Betűtípus',
     rarity: 'common',
   },
   {

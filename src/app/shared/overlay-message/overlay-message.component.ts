@@ -270,12 +270,12 @@ export class OverlayMessageComponent {
         return "'Bungee', sans-serif";
       case 'caveat':
         return "'Caveat', cursive";
-      case 'press-start-2p':
-        return "'Press Start 2P', monospace";
+      case 'pixelify-sans':
+        return "'Pixelify Sans', sans-serif";
       case 'special-elite':
         return "'Special Elite', monospace";
-      case 'agenda-fantasy':
-        return "'Agenda Fantasy', fantasy";
+      case 'metamorphous':
+        return "'Metamorphous', serif";
       case 'bubble-fantasy':
         return "'Bubble Fantasy', sans-serif";
       default:
