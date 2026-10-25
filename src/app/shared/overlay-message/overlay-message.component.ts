@@ -2,14 +2,16 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 export type OverlayMessageCosmeticSlot =
-  'border' | 'chat-theme' | 'entry-effect' | 'message-font' | 'username-color';
+  | 'border'
+  | 'chat-theme'
+  | 'entry-effect'
+  | 'message-font'
+  | 'username-color';
 
-export type OverlayMessageCosmetics = Partial<
-  Record<OverlayMessageCosmeticSlot, string>
->;
+export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot, string>>;
 
 type BorderStyle = 'neon' | 'ornate' | 'starlight';
-type ChatTheme = 'ivory' | 'midnight' | 'neon-night' | 'split-contrast';
+type ChatTheme = 'ivory' | 'midnight' | 'neon-night' | 'warm-ember';
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
@@ -38,9 +40,7 @@ export class OverlayMessageComponent {
 
   get borderStyle(): BorderStyle | null {
     const border = this.cosmetics.border;
-    return border === 'neon' || border === 'ornate' || border === 'starlight'
-      ? border
-      : null;
+    return border === 'neon' || border === 'ornate' || border === 'starlight' ? border : null;
   }
 
   get borderColor(): string | null {
@@ -61,9 +61,7 @@ export class OverlayMessageComponent {
 
   get usernameColor(): string | null {
     const usernameColor = this.cosmetics['username-color'];
-    return isHexColor(usernameColor)
-      ? usernameColor
-      : this.defaultUsernameColor;
+    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
   }
 
   get usernameColorPreset(): UsernameColorPreset | null {
@@ -113,16 +111,11 @@ function isHexColor(value: string | undefined): value is `#${string}` {
 
 function isChatTheme(value: string | undefined): value is ChatTheme {
   return (
-    value === 'ivory' ||
-    value === 'midnight' ||
-    value === 'neon-night' ||
-    value === 'split-contrast'
+    value === 'ivory' || value === 'midnight' || value === 'neon-night' || value === 'warm-ember'
   );
 }
 
-function isUsernameColorPreset(
-  value: string | undefined,
-): value is UsernameColorPreset {
+function isUsernameColorPreset(value: string | undefined): value is UsernameColorPreset {
   return (
     value === 'gradient-cosmic' ||
     value === 'gradient-nebula' ||

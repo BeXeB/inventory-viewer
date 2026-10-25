@@ -51,10 +51,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'chat-theme',
-      value: 'split-contrast',
+      value: 'warm-ember',
     },
     id: 'split-contrast-theme',
-    name: 'Kétszínű Kontraszt Téma',
+    name: 'Meleg Parázs Téma',
     rarity: 'epic',
   },
   {

@@ -7,33 +7,19 @@
   [class.overlay-message--theme-ivory]="chatTheme === 'ivory'"
   [class.overlay-message--theme-midnight]="chatTheme === 'midnight'"
   [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
-  [class.overlay-message--theme-split-contrast]="chatTheme === 'split-contrast'"
+  [class.overlay-message--theme-warm-ember]="chatTheme === 'warm-ember'"
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
-<strong
-  class="overlay-message__username"
-  [class.overlay-message__username--gradient-cosmic]="
-    usernameColorPreset === 'gradient-cosmic'
-  "
-    [class.overlay-message__username--gradient-nebula]="
-      usernameColorPreset === 'gradient-nebula'
-    "
-    [class.overlay-message__username--gradient-ocean]="
-      usernameColorPreset === 'gradient-ocean'
-    "
-    [class.overlay-message__username--gradient-sunset]="
-      usernameColorPreset === 'gradient-sunset'
-    "
-    [class.overlay-message__username--glow-aurora]="
-      usernameColorPreset === 'glow-aurora'
-    "
-    [class.overlay-message__username--glow-emerald]="
-      usernameColorPreset === 'glow-emerald'
-    "
-    [class.overlay-message__username--glow-inferno]="
-      usernameColorPreset === 'glow-inferno'
-    "
+  <strong
+    class="overlay-message__username"
+    [class.overlay-message__username--gradient-cosmic]="usernameColorPreset === 'gradient-cosmic'"
+    [class.overlay-message__username--gradient-nebula]="usernameColorPreset === 'gradient-nebula'"
+    [class.overlay-message__username--gradient-ocean]="usernameColorPreset === 'gradient-ocean'"
+    [class.overlay-message__username--gradient-sunset]="usernameColorPreset === 'gradient-sunset'"
+    [class.overlay-message__username--glow-aurora]="usernameColorPreset === 'glow-aurora'"
+    [class.overlay-message__username--glow-emerald]="usernameColorPreset === 'glow-emerald'"
+    [class.overlay-message__username--glow-inferno]="usernameColorPreset === 'glow-inferno'"
     [style.color]="usernameColor"
   >
     {{ displayName }}
