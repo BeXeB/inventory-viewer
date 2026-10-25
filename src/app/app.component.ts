@@ -6,6 +6,7 @@ import {
   decodeInventoryLink,
   InventoryCatalogItem,
   InventoryCosmeticSlot,
+  InventoryCatalogRarity,
   InventoryPayloadError,
   InventorySnapshot,
   readInventoryPayloadFromUrl,
@@ -31,9 +32,7 @@ const slotLabels: Record<InventoryCosmeticSlot, string> = {
   'username-color': 'Username color',
 };
 
-type InventoryRarity = InventoryCatalogItem['rarity'] | 'uncommon';
-
-const rarityLabels: Record<InventoryRarity, string> = {
+const rarityLabels: Record<InventoryCatalogRarity, string> = {
   common: 'Common',
   uncommon: 'Uncommon',
   rare: 'Rare',

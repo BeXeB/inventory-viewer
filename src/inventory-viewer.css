@@ -206,6 +206,13 @@ h3 {
   gap: 12px;
 }
 
+@media (min-width: 781px) {
+  .command-panel {
+    position: sticky;
+    top: 16px;
+  }
+}
+
 .skin-preview {
   display: flex;
   flex-direction: column;

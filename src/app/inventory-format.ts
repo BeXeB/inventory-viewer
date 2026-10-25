@@ -2,13 +2,20 @@ import {
   INVENTORY_CATALOG_ITEMS,
   INVENTORY_CATALOG_VERSION,
   INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION,
+  type InventoryCatalogRarity,
 } from './inventory-catalog.generated';
 
 const base64UrlAlphabet =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
-export type InventoryCatalogItem = (typeof INVENTORY_CATALOG_ITEMS)[number];
+export type InventoryCatalogItem = Omit<
+  (typeof INVENTORY_CATALOG_ITEMS)[number],
+  'rarity'
+> & {
+  rarity: InventoryCatalogRarity;
+};
 export type InventoryCosmeticSlot = InventoryCatalogItem['cosmetic']['slot'];
+export type { InventoryCatalogRarity };
 
 export interface InventorySnapshot {
   equippedItemIds: string[];
@@ -171,12 +178,12 @@ function hasBit(
   itemIndex: number,
 ): boolean {
   const byte = payload[offset + Math.floor(itemIndex / 8)] ?? 0;
-  return (byte & (1 << itemIndex % 8)) !== 0;
+  return (byte & (1 << (itemIndex % 8))) !== 0;
 }
 
 function setBit(payload: Uint8Array, offset: number, itemIndex: number): void {
   const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << itemIndex % 8);
+  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
 }
 
 function validateUnusedBits(
