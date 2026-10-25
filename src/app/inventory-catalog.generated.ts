@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 7 as const;
+export const INVENTORY_CATALOG_VERSION = 14 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -46,6 +46,69 @@ export const INVENTORY_CATALOG_ITEMS = [
     },
     id: 'jetbrains-mono-font',
     name: 'JetBrains Mono Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'orbitron',
+    },
+    id: 'orbitron-font',
+    name: 'Orbitron Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'bungee',
+    },
+    id: 'bungee-font',
+    name: 'Bungee Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'caveat',
+    },
+    id: 'caveat-font',
+    name: 'Caveat Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'press-start-2p',
+    },
+    id: 'press-start-2p-font',
+    name: 'Press Start 2P Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'special-elite',
+    },
+    id: 'special-elite-font',
+    name: 'Special Elite Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'agenda-fantasy',
+    },
+    id: 'agenda-fantasy-font',
+    name: 'Agenda Fantasy Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'bubble-fantasy',
+    },
+    id: 'bubble-fantasy-font',
+    name: 'Bubble Fantasy Betűtípus',
     rarity: 'common',
   },
   {

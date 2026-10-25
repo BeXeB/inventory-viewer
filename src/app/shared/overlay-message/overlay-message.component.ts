@@ -261,14 +261,34 @@ export class OverlayMessageComponent {
   }
 
   get messageFontFamily(): string | null {
-    return this.cosmetics['message-font'] === 'jetbrains-mono'
-      ? "'JetBrains Mono', monospace"
-      : null;
+    switch (this.cosmetics['message-font']) {
+      case 'jetbrains-mono':
+        return "'JetBrains Mono', monospace";
+      case 'orbitron':
+        return "'Orbitron', sans-serif";
+      case 'bungee':
+        return "'Bungee', sans-serif";
+      case 'caveat':
+        return "'Caveat', cursive";
+      case 'press-start-2p':
+        return "'Press Start 2P', monospace";
+      case 'special-elite':
+        return "'Special Elite', monospace";
+      case 'agenda-fantasy':
+        return "'Agenda Fantasy', fantasy";
+      case 'bubble-fantasy':
+        return "'Bubble Fantasy', sans-serif";
+      default:
+        return null;
+    }
   }
 
   get usernameColor(): string | null {
     const usernameColor = this.cosmetics['username-color'];
-    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
+    if (isHexColor(usernameColor)) {
+      return usernameColor;
+    }
+    return isUsernameColorPreset(usernameColor) ? null : this.defaultUsernameColor;
   }
 
   get usernameColorPreset(): UsernameColorPreset | null {
