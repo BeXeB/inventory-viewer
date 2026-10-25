@@ -4,41 +4,23 @@
   [class.overlay-message--border-neon]="borderStyle === 'neon'"
   [class.overlay-message--border-ornate]="borderStyle === 'ornate'"
   [class.overlay-message--border-starlight]="borderStyle === 'starlight'"
-  [class.overlay-message--theme-animated]="
-    chatThemeStyle?.animatedBackground !== undefined
-  "
+  [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
   [style.color]="chatThemeStyle?.color ?? null"
   [style.background]="chatThemeStyle?.background ?? null"
-  [style.--theme-animated-background]="
-    chatThemeStyle?.animatedBackground ?? null
-  "
+  [style.--theme-animated-background]="chatThemeStyle?.animatedBackground ?? null"
   [style.--theme-animation-name]="chatThemeStyle?.animationName ?? null"
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
   <strong
     class="overlay-message__username"
-    [class.overlay-message__username--gradient-cosmic]="
-      usernameColorPreset === 'gradient-cosmic'
-    "
-    [class.overlay-message__username--gradient-nebula]="
-      usernameColorPreset === 'gradient-nebula'
-    "
-    [class.overlay-message__username--gradient-ocean]="
-      usernameColorPreset === 'gradient-ocean'
-    "
-    [class.overlay-message__username--gradient-sunset]="
-      usernameColorPreset === 'gradient-sunset'
-    "
-    [class.overlay-message__username--glow-aurora]="
-      usernameColorPreset === 'glow-aurora'
-    "
-    [class.overlay-message__username--glow-emerald]="
-      usernameColorPreset === 'glow-emerald'
-    "
-    [class.overlay-message__username--glow-inferno]="
-      usernameColorPreset === 'glow-inferno'
-    "
+    [class.overlay-message__username--gradient-cosmic]="usernameColorPreset === 'gradient-cosmic'"
+    [class.overlay-message__username--gradient-nebula]="usernameColorPreset === 'gradient-nebula'"
+    [class.overlay-message__username--gradient-ocean]="usernameColorPreset === 'gradient-ocean'"
+    [class.overlay-message__username--gradient-sunset]="usernameColorPreset === 'gradient-sunset'"
+    [class.overlay-message__username--glow-aurora]="usernameColorPreset === 'glow-aurora'"
+    [class.overlay-message__username--glow-emerald]="usernameColorPreset === 'glow-emerald'"
+    [class.overlay-message__username--glow-inferno]="usernameColorPreset === 'glow-inferno'"
     [style.color]="usernameColor"
   >
     {{ displayName }}
