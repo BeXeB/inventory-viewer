@@ -42,7 +42,16 @@ export const CHAT_THEMES = [
 ] as const;
 export type ChatTheme = (typeof CHAT_THEMES)[number];
 
-export const CHAT_MESSAGE_FONTS = ['jetbrains-mono'] as const;
+export const CHAT_MESSAGE_FONTS = [
+  'jetbrains-mono',
+  'orbitron',
+  'bungee',
+  'caveat',
+  'press-start-2p',
+  'special-elite',
+  'agenda-fantasy',
+  'bubble-fantasy',
+] as const;
 export type ChatMessageFont = (typeof CHAT_MESSAGE_FONTS)[number];
 
 export const CHAT_USERNAME_COLOR_PRESETS = [
