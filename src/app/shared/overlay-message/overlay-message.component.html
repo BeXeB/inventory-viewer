@@ -5,10 +5,11 @@
   [class.overlay-message--border-ornate]="borderStyle === 'ornate'"
   [class.overlay-message--border-starlight]="borderStyle === 'starlight'"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
+  [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
   [style.color]="chatThemeStyle?.color ?? null"
   [style.background]="chatThemeStyle?.background ?? null"
   [style.--theme-animated-background]="chatThemeStyle?.animatedBackground ?? null"
-  [style.--theme-animation-name]="chatThemeStyle?.animationName ?? null"
+  [style.--theme-glow-color]="chatThemeStyle?.glowColor ?? null"
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
