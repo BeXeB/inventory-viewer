@@ -50,12 +50,77 @@ describe('AppComponent', () => {
       ),
       (item) => item.getAttribute('data-item-id'),
     );
+    const chatThemeItems = INVENTORY_CATALOG_ITEMS.filter(
+      (item) => item.cosmetic.slot === 'chat-theme',
+    );
+    expect(chatThemeItems.length).toBe(15);
+    expect(
+      chatThemeItems.filter((item) => item.rarity === 'common').length,
+    ).toBe(4);
+    expect(chatThemeItems.filter((item) => item.rarity === 'rare').length).toBe(
+      4,
+    );
+    expect(chatThemeItems.filter((item) => item.rarity === 'epic').length).toBe(
+      4,
+    );
+    expect(
+      chatThemeItems.filter((item) => item.rarity === 'legendary').length,
+    ).toBe(3);
     expect(chatThemeItemIds).toEqual([
       'ivory-theme',
+      'cloud-blue-theme',
+      'soft-sage-theme',
+      'blush-theme',
       'midnight-theme',
+      'deep-ocean-theme',
+      'forest-theme',
+      'amethyst-theme',
       'split-contrast-theme',
+      'aurora-theme',
+      'sakura-sunset-theme',
+      'glacier-theme',
       'neon-night-theme',
+      'solar-flare-theme',
+      'cosmic-current-theme',
     ]);
+    const warmEmberTheme = INVENTORY_CATALOG_ITEMS.find(
+      (item) => item.id === 'split-contrast-theme',
+    );
+    expect(warmEmberTheme?.name).toBe('Meleg Parázs Téma');
+    expect(warmEmberTheme?.cosmetic).toEqual({
+      slot: 'chat-theme',
+      value: 'warm-ember',
+    });
+  });
+
+  it('previews every chat theme and animates the two new legendary themes', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    const chatThemeItems = INVENTORY_CATALOG_ITEMS.filter(
+      (item) => item.cosmetic.slot === 'chat-theme',
+    );
+
+    for (const theme of chatThemeItems) {
+      const link = inventoryLink([theme.id], [theme.id]);
+      app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
+      fixture.detectChanges();
+
+      const preview = (fixture.nativeElement as HTMLElement).querySelector(
+        '.skin-preview-stage .overlay-message',
+      );
+      expect(preview).not.toBeNull();
+      expect((preview as HTMLElement).style.color).toBeTruthy();
+      expect((preview as HTMLElement).style.background).toBeTruthy();
+      expect(
+        (preview as HTMLElement).classList.contains(
+          'overlay-message--theme-animated',
+        ),
+      ).toBe(
+        theme.cosmetic.value === 'solar-flare' ||
+          theme.cosmetic.value === 'cosmic-current',
+      );
+    }
   });
 
   it('clears a slot without a None option', () => {
@@ -113,7 +178,7 @@ describe('AppComponent', () => {
     expect(app.selectedItemIds).toEqual(
       new Set(['sky-username', 'starlight-frame']),
     );
-    expect(app.equipCommand).toBe('!setequip AQSIAAA');
+    expect(app.equipCommand).toBe('!setequip AQWIAAAAAA');
     expect(fixture.nativeElement.textContent).toContain('Your equip command');
 
     starlightButton?.click();
@@ -150,9 +215,8 @@ describe('AppComponent', () => {
     expect(
       message?.classList.contains('overlay-message--border-starlight'),
     ).toBeTrue();
-    expect(
-      message?.classList.contains('overlay-message--theme-midnight'),
-    ).toBeTrue();
+    expect((message as HTMLElement).style.background).toBe('rgb(36, 48, 59)');
+    expect((message as HTMLElement).style.color).toBe('rgb(248, 250, 252)');
     expect(message?.getAttribute('style')).toContain(
       'animation-name: overlay-slide-in',
     );
@@ -224,5 +288,5 @@ function setItemBit(
     throw new Error('The test payload contains an unknown item.');
   }
   const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
+  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << itemIndex % 8);
 }

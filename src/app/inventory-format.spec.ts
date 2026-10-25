@@ -52,9 +52,9 @@ describe('inventory payload format', () => {
 
   it('creates a versioned !setequip command and supports an empty selection', () => {
     expect(createSetEquipmentCommand(['sky-username', 'gilded-edge'])).toBe(
-      '!setequip AQSEAAA',
+      '!setequip AQWEAAAAAA',
     );
-    expect(createSetEquipmentCommand([])).toBe('!setequip AQQAAAA');
+    expect(createSetEquipmentCommand([])).toBe('!setequip AQUAAAAAAA');
   });
 
   it('rejects unknown skins and multiple selections for one slot', () => {
@@ -112,7 +112,7 @@ function setItemBit(
     throw new Error('The test payload contains an unknown item.');
   }
   const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
+  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << itemIndex % 8);
 }
 
 function encodeBase64Url(bytes: Uint8Array): string {

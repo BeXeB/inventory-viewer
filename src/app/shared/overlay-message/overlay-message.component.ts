@@ -1,15 +1,24 @@
 // Canonical message renderer, synced to the inventory viewer by CI.
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
+import {
+  INVENTORY_CATALOG_THEMES,
+  type InventoryCatalogTheme,
+} from '../../inventory-catalog.generated';
+
 export type OverlayMessageCosmeticSlot =
-  'border' | 'chat-theme' | 'entry-effect' | 'message-font' | 'username-color';
+  | 'border'
+  | 'chat-theme'
+  | 'entry-effect'
+  | 'message-font'
+  | 'username-color';
 
 export type OverlayMessageCosmetics = Partial<
   Record<OverlayMessageCosmeticSlot, string>
 >;
 
 type BorderStyle = 'neon' | 'ornate' | 'starlight';
-type ChatTheme = 'ivory' | 'midnight' | 'neon-night' | 'split-contrast';
+type ChatTheme = InventoryCatalogTheme;
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
@@ -19,6 +28,59 @@ type UsernameColorPreset =
   | 'glow-aurora'
   | 'glow-emerald'
   | 'glow-inferno';
+
+interface ChatThemeStyle {
+  animatedBackground?: string;
+  animationName?: string;
+  background: string;
+  color: string;
+}
+
+const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
+  ivory: { background: '#fff4de', color: '#1e293b' },
+  'cloud-blue': { background: '#eaf4ff', color: '#17324d' },
+  'soft-sage': { background: '#edf4e7', color: '#293b2d' },
+  blush: { background: '#fff0f3', color: '#4a2532' },
+  midnight: { background: '#24303b', color: '#f8fafc' },
+  'deep-ocean': { background: '#0c2d48', color: '#ecf7ff' },
+  forest: { background: '#173a32', color: '#e7f7ec' },
+  amethyst: { background: '#302347', color: '#f4eaff' },
+  'warm-ember': {
+    background:
+      'linear-gradient(110deg, #241222 0%, #3c1f31 52%, #5a2b1d 100%)',
+    color: '#fff1e6',
+  },
+  aurora: {
+    background:
+      'linear-gradient(110deg, #103746 0%, #1e4d67 50%, #342a5e 100%)',
+    color: '#e8fffa',
+  },
+  'sakura-sunset': {
+    background:
+      'linear-gradient(110deg, #55213f 0%, #773144 52%, #783622 100%)',
+    color: '#fff0f3',
+  },
+  glacier: {
+    background:
+      'linear-gradient(110deg, #0d3b5a 0%, #145a68 52%, #1e3e70 100%)',
+    color: '#eefaff',
+  },
+  'neon-night': { background: '#111827', color: '#67e8f9' },
+  'solar-flare': {
+    animatedBackground:
+      'linear-gradient(110deg, #4a1712 0%, #7a2617 38%, #8a3b13 65%, #4a1712 100%)',
+    animationName: 'overlay-theme-solar-flare',
+    background: 'transparent',
+    color: '#fff3d6',
+  },
+  'cosmic-current': {
+    animatedBackground:
+      'linear-gradient(110deg, #17123d 0%, #2a246b 42%, #104d58 72%, #17123d 100%)',
+    animationName: 'overlay-theme-cosmic-current',
+    background: 'transparent',
+    color: '#f4eaff',
+  },
+};
 
 @Component({
   selector: 'app-overlay-message',
@@ -51,6 +113,11 @@ export class OverlayMessageComponent {
   get chatTheme(): ChatTheme | null {
     const theme = this.cosmetics['chat-theme'];
     return isChatTheme(theme) ? theme : null;
+  }
+
+  get chatThemeStyle(): ChatThemeStyle | null {
+    const theme = this.chatTheme;
+    return theme === null ? null : CHAT_THEME_STYLES[theme];
   }
 
   get messageFontFamily(): string | null {
@@ -113,10 +180,8 @@ function isHexColor(value: string | undefined): value is `#${string}` {
 
 function isChatTheme(value: string | undefined): value is ChatTheme {
   return (
-    value === 'ivory' ||
-    value === 'midnight' ||
-    value === 'neon-night' ||
-    value === 'split-contrast'
+    typeof value === 'string' &&
+    INVENTORY_CATALOG_THEMES.some((theme) => theme === value)
   );
 }
 
