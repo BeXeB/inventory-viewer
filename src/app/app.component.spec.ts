@@ -27,6 +27,65 @@ describe('AppComponent', () => {
     );
   });
 
+  it('orders skin choices and selected skins by rarity', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    const link = inventoryLink(
+      INVENTORY_CATALOG_ITEMS.map((item) => item.id),
+      ['sky-username', 'midnight-theme', 'starlight-frame'],
+    );
+    app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
+    fixture.detectChanges();
+
+    expect(app.selectedItems.map((item) => item.id)).toEqual([
+      'sky-username',
+      'midnight-theme',
+      'starlight-frame',
+    ]);
+
+    const chatThemeItemIds = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll(
+        '.slot-group[aria-labelledby="slot-chat-theme"] .skin-option[data-item-id]',
+      ),
+      (item) => item.getAttribute('data-item-id'),
+    );
+    expect(chatThemeItemIds).toEqual([
+      'ivory-theme',
+      'midnight-theme',
+      'split-contrast-theme',
+      'neon-night-theme',
+    ]);
+  });
+
+  it('clears a slot without a None option', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.detectChanges();
+    const link = inventoryLink(['ivory-theme'], ['ivory-theme']);
+    app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
+    fixture.detectChanges();
+
+    const slotGroup = (fixture.nativeElement as HTMLElement).querySelector(
+      '.slot-group[aria-labelledby="slot-chat-theme"]',
+    );
+    expect(
+      slotGroup?.querySelector(
+        '.skin-options .skin-option:not([data-item-id])',
+      ),
+    ).toBeNull();
+
+    const clearButton = slotGroup?.querySelector(
+      '.clear-slot-button',
+    ) as HTMLButtonElement | null;
+    expect(clearButton?.disabled).toBeFalse();
+    clearButton?.click();
+    fixture.detectChanges();
+
+    expect(app.isSlotEmpty('chat-theme')).toBeTrue();
+    expect(clearButton?.disabled).toBeTrue();
+  });
+
   it('preselects the current equipment and replaces a slot selection interactively', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;

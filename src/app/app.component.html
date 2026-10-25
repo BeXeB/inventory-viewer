@@ -51,21 +51,6 @@
               role="radiogroup"
               [attr.aria-label]="group.label"
             >
-              <button
-                class="skin-option card"
-                type="button"
-                role="radio"
-                [attr.aria-checked]="isSlotEmpty(group.slot)"
-                [class.selected]="isSlotEmpty(group.slot)"
-                (click)="clearSlot(group.slot)"
-              >
-                <span class="skin-option-heading">
-                  <span class="skin-name">None</span>
-                  <span class="skin-rarity">Empty</span>
-                </span>
-                <span class="skin-detail">Leave this slot unequipped</span>
-              </button>
-
               @for (item of group.items; track item.id) {
                 <button
                   class="skin-option card"

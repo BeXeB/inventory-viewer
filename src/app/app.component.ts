@@ -11,7 +11,10 @@ import {
   InventorySnapshot,
   readInventoryPayloadFromUrl,
 } from './inventory-format';
-import { INVENTORY_CATALOG_ITEMS } from './inventory-catalog.generated';
+import {
+  INVENTORY_CATALOG_ITEMS,
+  INVENTORY_CATALOG_RARITIES,
+} from './inventory-catalog.generated';
 import {
   OverlayMessageComponent,
   type OverlayMessageCosmetics,
@@ -72,7 +75,7 @@ export class AppComponent implements OnInit {
   get selectedItems(): InventoryCatalogItem[] {
     return this.catalogItems.filter((item) =>
       this.selectedItemIds.has(item.id),
-    );
+    ).sort(compareItemsByRarity);
   }
 
   get selectedCosmetics(): OverlayMessageCosmetics {
@@ -200,8 +203,18 @@ function createSlotGroups(): InventorySlotGroup[] {
   }
 
   return Array.from(groups, ([slot, items]) => ({
-    items,
+    items: items.sort(compareItemsByRarity),
     label: slotLabels[slot],
     slot,
   }));
+}
+
+function compareItemsByRarity(
+  left: InventoryCatalogItem,
+  right: InventoryCatalogItem,
+): number {
+  return (
+    INVENTORY_CATALOG_RARITIES.indexOf(left.rarity) -
+    INVENTORY_CATALOG_RARITIES.indexOf(right.rarity)
+  );
 }
