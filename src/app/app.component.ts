@@ -24,10 +24,9 @@ interface InventorySlotGroup {
 }
 
 const slotLabels: Record<InventoryCosmeticSlot, string> = {
-  'background-color': 'Chat background',
   border: 'Message border',
+  'chat-theme': 'Chat theme',
   'entry-effect': 'Entry effect',
-  'message-color': 'Message text color',
   'message-font': 'Message font',
   'username-color': 'Username color',
 };

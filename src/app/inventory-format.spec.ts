@@ -3,18 +3,21 @@ import {
   decodeInventoryLink,
   readInventoryPayloadFromUrl,
 } from './inventory-format';
-import { INVENTORY_CATALOG_ITEMS } from './inventory-catalog.generated';
+import {
+  INVENTORY_CATALOG_ITEMS,
+  INVENTORY_CATALOG_VERSION,
+} from './inventory-catalog.generated';
 
 describe('inventory payload format', () => {
   it('decodes ownership and currently equipped bits by canonical catalog index', () => {
     const encoded = inventoryLink(
-      ['mint-signature', 'gilded-edge'],
-      ['mint-signature', 'gilded-edge'],
+      ['sky-username', 'gilded-edge'],
+      ['sky-username', 'gilded-edge'],
     );
 
     expect(decodeInventoryLink(encoded)).toEqual({
-      ownedItemIds: ['mint-signature', 'gilded-edge'],
-      equippedItemIds: ['mint-signature', 'gilded-edge'],
+      ownedItemIds: ['gilded-edge', 'sky-username'],
+      equippedItemIds: ['gilded-edge', 'sky-username'],
     });
   });
 
@@ -28,14 +31,14 @@ describe('inventory payload format', () => {
   });
 
   it('rejects an unsupported catalog version', () => {
-    expect(() => decodeInventoryLink(inventoryLink([], [], 2))).toThrowError(
-      'This inventory link uses an unsupported skin catalog.',
-    );
+    expect(() =>
+      decodeInventoryLink(inventoryLink([], [], INVENTORY_CATALOG_VERSION + 1)),
+    ).toThrowError('This inventory link uses an unsupported skin catalog.');
   });
 
   it('rejects equipped skins that are not owned and duplicate equipped slots', () => {
     expect(() =>
-      decodeInventoryLink(inventoryLink([], ['mint-signature'])),
+      decodeInventoryLink(inventoryLink([], ['sky-username'])),
     ).toThrowError('This inventory link marks a skin equipped but not owned.');
     expect(() =>
       decodeInventoryLink(
@@ -48,10 +51,10 @@ describe('inventory payload format', () => {
   });
 
   it('creates a versioned !setequip command and supports an empty selection', () => {
-    expect(createSetEquipmentCommand(['mint-signature', 'gilded-edge'])).toBe(
-      '!setequip AQEM',
+    expect(createSetEquipmentCommand(['sky-username', 'gilded-edge'])).toBe(
+      '!setequip AQSEAAA',
     );
-    expect(createSetEquipmentCommand([])).toBe('!setequip AQEA');
+    expect(createSetEquipmentCommand([])).toBe('!setequip AQQAAAA');
   });
 
   it('rejects unknown skins and multiple selections for one slot', () => {
@@ -81,7 +84,7 @@ describe('inventory payload format', () => {
 function inventoryLink(
   ownedItemIds: string[],
   equippedItemIds: string[],
-  catalogVersion = 1,
+  catalogVersion: number = INVENTORY_CATALOG_VERSION,
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
   const payload = new Uint8Array(1 + bitmapLength * 2);
@@ -109,7 +112,7 @@ function setItemBit(
     throw new Error('The test payload contains an unknown item.');
   }
   const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << itemIndex % 8);
+  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
 }
 
 function encodeBase64Url(bytes: Uint8Array): string {

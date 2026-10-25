@@ -2,22 +2,22 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 export type OverlayMessageCosmeticSlot =
-  | 'background-color'
-  | 'border'
-  | 'entry-effect'
-  | 'message-color'
-  | 'message-font'
-  | 'username-color';
+  'border' | 'chat-theme' | 'entry-effect' | 'message-font' | 'username-color';
 
-export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot, string>>;
+export type OverlayMessageCosmetics = Partial<
+  Record<OverlayMessageCosmeticSlot, string>
+>;
 
 type BorderStyle = 'neon' | 'ornate' | 'starlight';
+type ChatTheme = 'ivory' | 'midnight' | 'neon-night' | 'split-contrast';
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
+  | 'gradient-nebula'
   | 'gradient-ocean'
   | 'gradient-sunset'
   | 'glow-aurora'
+  | 'glow-emerald'
   | 'glow-inferno';
 
 @Component({
@@ -38,7 +38,9 @@ export class OverlayMessageComponent {
 
   get borderStyle(): BorderStyle | null {
     const border = this.cosmetics.border;
-    return border === 'neon' || border === 'ornate' || border === 'starlight' ? border : null;
+    return border === 'neon' || border === 'ornate' || border === 'starlight'
+      ? border
+      : null;
   }
 
   get borderColor(): string | null {
@@ -46,15 +48,9 @@ export class OverlayMessageComponent {
     return isHexColor(border) ? border : null;
   }
 
-  get backgroundPreset(): 'split-contrast-blue' | null {
-    return this.cosmetics['background-color'] === 'split-contrast-blue'
-      ? 'split-contrast-blue'
-      : null;
-  }
-
-  get backgroundColor(): string | null {
-    const background = this.cosmetics['background-color'];
-    return isHexColor(background) ? background : null;
+  get chatTheme(): ChatTheme | null {
+    const theme = this.cosmetics['chat-theme'];
+    return isChatTheme(theme) ? theme : null;
   }
 
   get messageFontFamily(): string | null {
@@ -65,7 +61,9 @@ export class OverlayMessageComponent {
 
   get usernameColor(): string | null {
     const usernameColor = this.cosmetics['username-color'];
-    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
+    return isHexColor(usernameColor)
+      ? usernameColor
+      : this.defaultUsernameColor;
   }
 
   get usernameColorPreset(): UsernameColorPreset | null {
@@ -113,12 +111,25 @@ function isHexColor(value: string | undefined): value is `#${string}` {
   return typeof value === 'string' && /^#[\da-f]{6}$/i.test(value);
 }
 
-function isUsernameColorPreset(value: string | undefined): value is UsernameColorPreset {
+function isChatTheme(value: string | undefined): value is ChatTheme {
+  return (
+    value === 'ivory' ||
+    value === 'midnight' ||
+    value === 'neon-night' ||
+    value === 'split-contrast'
+  );
+}
+
+function isUsernameColorPreset(
+  value: string | undefined,
+): value is UsernameColorPreset {
   return (
     value === 'gradient-cosmic' ||
+    value === 'gradient-nebula' ||
     value === 'gradient-ocean' ||
     value === 'gradient-sunset' ||
     value === 'glow-aurora' ||
+    value === 'glow-emerald' ||
     value === 'glow-inferno'
   );
 }

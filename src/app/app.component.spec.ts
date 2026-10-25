@@ -1,7 +1,10 @@
 import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 
-import { INVENTORY_CATALOG_ITEMS } from './inventory-catalog.generated';
+import {
+  INVENTORY_CATALOG_ITEMS,
+  INVENTORY_CATALOG_VERSION,
+} from './inventory-catalog.generated';
 import { AppComponent } from './app.component';
 import { OverlayMessageComponent } from './shared/overlay-message/overlay-message.component';
 
@@ -29,14 +32,14 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
     const link = inventoryLink(
-      ['mint-signature', 'gilded-edge', 'starlight-frame'],
-      ['mint-signature', 'gilded-edge'],
+      ['sky-username', 'gilded-edge', 'starlight-frame'],
+      ['sky-username', 'gilded-edge'],
     );
     app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
     fixture.detectChanges();
 
     expect(app.selectedItemIds).toEqual(
-      new Set(['mint-signature', 'gilded-edge']),
+      new Set(['sky-username', 'gilded-edge']),
     );
 
     const starlightButton = (
@@ -49,15 +52,15 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     expect(app.selectedItemIds).toEqual(
-      new Set(['mint-signature', 'starlight-frame']),
+      new Set(['sky-username', 'starlight-frame']),
     );
-    expect(app.equipCommand).toBe('!setequip AQEU');
+    expect(app.equipCommand).toBe('!setequip AQSIAAA');
     expect(fixture.nativeElement.textContent).toContain('Your equip command');
 
     starlightButton?.click();
     fixture.detectChanges();
     expect(app.selectedItemIds).toEqual(
-      new Set(['mint-signature', 'starlight-frame']),
+      new Set(['sky-username', 'starlight-frame']),
     );
   });
 
@@ -66,11 +69,10 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
     const selectedItemIds = [
-      'ember-text',
       'jetbrains-mono-font',
-      'mint-signature',
+      'sky-username',
       'starlight-frame',
-      'midnight-background',
+      'midnight-theme',
       'slide-entry',
     ];
     const link = inventoryLink(selectedItemIds, selectedItemIds);
@@ -84,17 +86,14 @@ describe('AppComponent', () => {
     expect(message?.querySelector('strong')?.textContent?.trim()).toBe('xyz');
     expect(message?.querySelector('span')?.textContent?.trim()).toBe(': hello');
     expect(message?.querySelector('strong')?.getAttribute('style')).toContain(
-      'color: rgb(114, 224, 182)',
-    );
-    expect(message?.querySelector('span')?.getAttribute('style')).toContain(
-      'color: rgb(255, 115, 92)',
+      'color: rgb(116, 192, 252)',
     );
     expect(
       message?.classList.contains('overlay-message--border-starlight'),
     ).toBeTrue();
-    expect(message?.getAttribute('style')).toContain(
-      '--message-background-color: #24303B',
-    );
+    expect(
+      message?.classList.contains('overlay-message--theme-midnight'),
+    ).toBeTrue();
     expect(message?.getAttribute('style')).toContain(
       'animation-name: overlay-slide-in',
     );
@@ -114,7 +113,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
-    const link = inventoryLink(['mint-signature'], ['mint-signature']);
+    const link = inventoryLink(['sky-username'], ['sky-username']);
     app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
     fixture.detectChanges();
 
@@ -139,7 +138,7 @@ function inventoryLink(
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
   const payload = new Uint8Array(1 + bitmapLength * 2);
-  payload[0] = 1;
+  payload[0] = INVENTORY_CATALOG_VERSION;
   const itemIndexes = new Map<string, number>(
     INVENTORY_CATALOG_ITEMS.map((item, index) => [item.id, index]),
   );
@@ -166,5 +165,5 @@ function setItemBit(
     throw new Error('The test payload contains an unknown item.');
   }
   const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << itemIndex % 8);
+  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
 }
