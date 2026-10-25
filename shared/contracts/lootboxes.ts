@@ -47,9 +47,9 @@ export const CHAT_MESSAGE_FONTS = [
   'orbitron',
   'bungee',
   'caveat',
-  'press-start-2p',
+  'pixelify-sans',
   'special-elite',
-  'agenda-fantasy',
+  'metamorphous',
   'bubble-fantasy',
 ] as const;
 export type ChatMessageFont = (typeof CHAT_MESSAGE_FONTS)[number];
