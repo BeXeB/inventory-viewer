@@ -268,7 +268,10 @@ export class OverlayMessageComponent {
 
   get usernameColor(): string | null {
     const usernameColor = this.cosmetics['username-color'];
-    return isHexColor(usernameColor) ? usernameColor : this.defaultUsernameColor;
+    if (isHexColor(usernameColor)) {
+      return usernameColor;
+    }
+    return isUsernameColorPreset(usernameColor) ? null : this.defaultUsernameColor;
   }
 
   get usernameColorPreset(): UsernameColorPreset | null {
