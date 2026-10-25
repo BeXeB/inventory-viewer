@@ -31,12 +31,14 @@ const slotLabels: Record<InventoryCosmeticSlot, string> = {
   'username-color': 'Username color',
 };
 
-const rarityLabels: Record<InventoryCatalogItem['rarity'], string> = {
+type InventoryRarity = InventoryCatalogItem['rarity'] | 'uncommon';
+
+const rarityLabels: Record<InventoryRarity, string> = {
   common: 'Common',
+  uncommon: 'Uncommon',
+  rare: 'Rare',
   epic: 'Epic',
   legendary: 'Legendary',
-  rare: 'Rare',
-  uncommon: 'Uncommon',
 };
 
 @Component({
