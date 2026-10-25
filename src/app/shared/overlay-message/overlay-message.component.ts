@@ -24,9 +24,9 @@ type UsernameColorPreset =
 
 interface ChatThemeStyle {
   animatedBackground?: string;
-  animationName?: string;
   background: string;
   color: string;
+  glowColor?: string;
 }
 
 const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
@@ -54,20 +54,26 @@ const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
     background: 'linear-gradient(110deg, #0d3b5a 0%, #145a68 52%, #1e3e70 100%)',
     color: '#eefaff',
   },
-  'neon-night': { background: '#111827', color: '#67e8f9' },
+  'neon-night': {
+    animatedBackground:
+      'linear-gradient(110deg, #111827 0%, #12384b 38%, #155b70 64%, #111827 100%)',
+    background: '#111827',
+    color: '#67e8f9',
+    glowColor: 'rgba(34, 211, 238, 0.42)',
+  },
   'solar-flare': {
     animatedBackground:
       'linear-gradient(110deg, #4a1712 0%, #7a2617 38%, #8a3b13 65%, #4a1712 100%)',
-    animationName: 'overlay-theme-solar-flare',
-    background: 'transparent',
+    background: '#4a1712',
     color: '#fff3d6',
+    glowColor: 'rgba(249, 115, 22, 0.45)',
   },
   'cosmic-current': {
     animatedBackground:
       'linear-gradient(110deg, #17123d 0%, #2a246b 42%, #104d58 72%, #17123d 100%)',
-    animationName: 'overlay-theme-cosmic-current',
-    background: 'transparent',
+    background: '#17123d',
     color: '#f4eaff',
+    glowColor: 'rgba(34, 211, 238, 0.4)',
   },
 };
 

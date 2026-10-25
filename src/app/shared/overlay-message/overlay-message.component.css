@@ -47,15 +47,16 @@
 }
 
 .overlay-message--theme-animated::before {
-  animation-name: var(--theme-animation-name);
-  animation-duration: 18s;
+  animation-name: overlay-theme-flow;
+  animation-duration: 8s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   background-image: var(--theme-animated-background);
   background-position: 0% 50%;
-  background-size: 220% 100%;
+  background-size: 280% 100%;
   border-radius: inherit;
+  box-shadow: 0 0 14px 2px var(--theme-glow-color);
   content: '';
   inset: var(--message-theme-background-inset);
   pointer-events: none;
@@ -63,13 +64,11 @@
   z-index: -1;
 }
 
-@keyframes overlay-theme-solar-flare {
-  to {
-    background-position: 100% 50%;
-  }
+.overlay-message--theme-neon-night {
+  text-shadow: 0 0 4px rgba(103, 232, 249, 0.4);
 }
 
-@keyframes overlay-theme-cosmic-current {
+@keyframes overlay-theme-flow {
   to {
     background-position: 100% 50%;
   }
