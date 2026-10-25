@@ -4,10 +4,10 @@
   [class.overlay-message--border-neon]="borderStyle === 'neon'"
   [class.overlay-message--border-ornate]="borderStyle === 'ornate'"
   [class.overlay-message--border-starlight]="borderStyle === 'starlight'"
-  [class.overlay-message--background-split-contrast-blue]="
-    backgroundPreset === 'split-contrast-blue'
-  "
-  [style.--message-background-color]="backgroundColor"
+  [class.overlay-message--theme-ivory]="chatTheme === 'ivory'"
+  [class.overlay-message--theme-midnight]="chatTheme === 'midnight'"
+  [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
+  [class.overlay-message--theme-split-contrast]="chatTheme === 'split-contrast'"
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
@@ -24,7 +24,5 @@
   >
     {{ displayName }}
   </strong>
-  <span [style.color]="cosmetics['message-color'] ?? null" [style.font-family]="messageFontFamily">
-    : {{ message }}
-  </span>
+  <span [style.font-family]="messageFontFamily"> : {{ message }} </span>
 </p>

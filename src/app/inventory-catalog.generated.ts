@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 3 as const;
+export const INVENTORY_CATALOG_VERSION = 4 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -14,11 +14,11 @@ export type InventoryCatalogRarity =
 export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
-      slot: 'message-color',
-      value: '#FF735C',
+      slot: 'chat-theme',
+      value: 'ivory',
     },
-    id: 'ember-text',
-    name: 'Parázsvörös Szöveg',
+    id: 'ivory-theme',
+    name: 'Elefántcsont Téma',
     rarity: 'common',
   },
   {
@@ -50,20 +50,20 @@ export const INVENTORY_CATALOG_ITEMS = [
   },
   {
     cosmetic: {
-      slot: 'background-color',
-      value: 'split-contrast-blue',
+      slot: 'chat-theme',
+      value: 'split-contrast',
     },
-    id: 'split-contrast-background',
-    name: 'Kétszínű, kék vonalas háttér',
+    id: 'split-contrast-theme',
+    name: 'Kétszínű Kontraszt Téma',
     rarity: 'epic',
   },
   {
     cosmetic: {
-      slot: 'background-color',
-      value: '#24303B',
+      slot: 'chat-theme',
+      value: 'midnight',
     },
-    id: 'midnight-background',
-    name: 'Éjféli Háttér',
+    id: 'midnight-theme',
+    name: 'Éjféli Téma',
     rarity: 'rare',
   },
   {
@@ -208,6 +208,15 @@ export const INVENTORY_CATALOG_ITEMS = [
     },
     id: 'emerald-glow-username',
     name: 'Smaragd Ragyogás',
+    rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'neon-night',
+    },
+    id: 'neon-night-theme',
+    name: 'Neon Éjszaka Téma',
     rarity: 'legendary',
   },
 ] as const;
