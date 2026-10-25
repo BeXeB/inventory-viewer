@@ -11,7 +11,15 @@
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
-  <strong [style.color]="cosmetics['username-color'] ?? defaultUsernameColor">
+  <strong
+    class="overlay-message__username"
+    [class.overlay-message__username--gradient-cosmic]="usernameColorPreset === 'gradient-cosmic'"
+    [class.overlay-message__username--gradient-ocean]="usernameColorPreset === 'gradient-ocean'"
+    [class.overlay-message__username--gradient-sunset]="usernameColorPreset === 'gradient-sunset'"
+    [class.overlay-message__username--glow-aurora]="usernameColorPreset === 'glow-aurora'"
+    [class.overlay-message__username--glow-inferno]="usernameColorPreset === 'glow-inferno'"
+    [style.color]="usernameColor"
+  >
     {{ displayName }}
   </strong>
   <span [style.color]="cosmetics['message-color'] ?? null" [style.font-family]="messageFontFamily">
