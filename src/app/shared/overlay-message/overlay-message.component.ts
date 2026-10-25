@@ -1,6 +1,11 @@
 // Canonical message renderer, synced to the inventory viewer by CI.
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { isChatTheme, type ChatTheme } from '../../../../shared/contracts/lootboxes';
+import {
+  isChatBorderStyle,
+  isChatTheme,
+  type ChatBorderStyle,
+  type ChatTheme,
+} from '../../../../shared/contracts/lootboxes';
 
 export type OverlayMessageCosmeticSlot =
   | 'border'
@@ -11,7 +16,6 @@ export type OverlayMessageCosmeticSlot =
 
 export type OverlayMessageCosmetics = Partial<Record<OverlayMessageCosmeticSlot, string>>;
 
-type BorderStyle = 'neon' | 'ornate' | 'starlight';
 type EntryEffect = 'bounce-in' | 'drift-up' | 'fade-in' | 'slide-in';
 type UsernameColorPreset =
   | 'gradient-cosmic'
@@ -21,6 +25,151 @@ type UsernameColorPreset =
   | 'glow-aurora'
   | 'glow-emerald'
   | 'glow-inferno';
+
+interface BorderAppearance {
+  animated?: boolean;
+  border: string;
+  borderLeft: string;
+  borderRadius: string;
+  boxShadow: string;
+  glowColor?: string;
+  themeBackgroundInset: string;
+}
+
+const BORDER_APPEARANCES: Record<ChatBorderStyle, BorderAppearance> = {
+  'mint-thread': {
+    border: '1px solid #68cba8',
+    borderLeft: '4px solid #68cba8',
+    borderRadius: '3px',
+    boxShadow: 'none',
+    themeBackgroundInset: '1px 1px 1px 4px',
+  },
+  skyline: {
+    border: '1px solid #78bfea',
+    borderLeft: '4px solid #78bfea',
+    borderRadius: '2px',
+    boxShadow: 'inset 0 0 0 1px rgba(120, 191, 234, 0.22)',
+    themeBackgroundInset: '1px 1px 1px 4px',
+  },
+  'coral-stitch': {
+    border: '1px dashed #f28585',
+    borderLeft: '4px solid #f28585',
+    borderRadius: '4px',
+    boxShadow: 'none',
+    themeBackgroundInset: '1px 1px 1px 4px',
+  },
+  'sunlit-edge': {
+    border: '1px double #e6b84f',
+    borderLeft: '4px double #e6b84f',
+    borderRadius: '2px',
+    boxShadow: 'inset 0 0 0 1px rgba(230, 184, 79, 0.2)',
+    themeBackgroundInset: '1px 1px 1px 4px',
+  },
+  'copper-inlay': {
+    border: '3px double #c98258',
+    borderLeft: '5px double #e3a26f',
+    borderRadius: '4px',
+    boxShadow: 'inset 0 0 0 1px rgba(227, 162, 111, 0.2)',
+    themeBackgroundInset: '3px 3px 3px 5px',
+  },
+  'ice-lattice': {
+    border: '2px dotted #74d5f2',
+    borderLeft: '4px solid #a4ebf8',
+    borderRadius: '3px',
+    boxShadow: '0 0 5px rgba(116, 213, 242, 0.28)',
+    themeBackgroundInset: '2px 2px 2px 4px',
+  },
+  moonstone: {
+    border: '2px double #bfa8f5',
+    borderLeft: '4px solid #e4d5ff',
+    borderRadius: '5px',
+    boxShadow: 'inset 0 0 0 1px rgba(228, 213, 255, 0.25)',
+    themeBackgroundInset: '2px 2px 2px 4px',
+  },
+  'tide-glow': {
+    border: '1px solid #2dcfc0',
+    borderLeft: '4px solid #2dcfc0',
+    borderRadius: '7px',
+    boxShadow: '0 0 7px rgba(45, 207, 192, 0.38)',
+    themeBackgroundInset: '1px 1px 1px 4px',
+  },
+  'aurora-ribbon': {
+    border: '2px solid #5eead4',
+    borderLeft: '5px solid #a78bfa',
+    borderRadius: '5px',
+    boxShadow: '0 0 5px rgba(94, 234, 212, 0.28), inset 0 0 0 1px rgba(167, 139, 250, 0.32)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  'nebula-rim': {
+    border: '2px double #c084fc',
+    borderLeft: '5px solid #22d3ee',
+    borderRadius: '5px',
+    boxShadow: '0 0 7px rgba(192, 132, 252, 0.35)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  'prismatic-edge': {
+    border: '2px solid #f0abfc',
+    borderLeft: '5px double #fde68a',
+    borderRadius: '4px',
+    boxShadow: '0 0 5px rgba(240, 171, 252, 0.3), inset 0 0 0 1px rgba(253, 230, 138, 0.2)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  'deep-current': {
+    border: '2px dashed #38bdf8',
+    borderLeft: '5px solid #2dd4bf',
+    borderRadius: '6px',
+    boxShadow: '0 0 7px rgba(56, 189, 248, 0.3)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  'phoenix-flare': {
+    animated: true,
+    border: '2px solid #f97316',
+    borderLeft: '5px double #fde68a',
+    borderRadius: '5px',
+    boxShadow: '0 0 7px rgba(249, 115, 22, 0.4)',
+    glowColor: 'rgba(249, 115, 22, 0.76)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  'celestial-crown': {
+    animated: true,
+    border: '2px double #facc15',
+    borderLeft: '5px solid #fff1a6',
+    borderRadius: '7px',
+    boxShadow: '0 0 7px rgba(250, 204, 21, 0.4)',
+    glowColor: 'rgba(250, 204, 21, 0.78)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  dragonwake: {
+    animated: true,
+    border: '2px solid #34d399',
+    borderLeft: '5px double #22d3ee',
+    borderRadius: '6px',
+    boxShadow: '0 0 7px rgba(52, 211, 153, 0.4)',
+    glowColor: 'rgba(45, 212, 191, 0.8)',
+    themeBackgroundInset: '2px 2px 2px 5px',
+  },
+  neon: {
+    border: '1px solid var(--message-border-color, #fff)',
+    borderLeft: '1px solid var(--message-border-color, #fff)',
+    borderRadius: '3px',
+    boxShadow: '0 0 8px var(--message-border-color, #fff)',
+    themeBackgroundInset: '1px',
+  },
+  ornate: {
+    border: '3px double var(--message-border-color, #fff)',
+    borderLeft: '3px double var(--message-border-color, #fff)',
+    borderRadius: '5px',
+    boxShadow: 'none',
+    themeBackgroundInset: '3px',
+  },
+  starlight: {
+    border: '2px double var(--message-border-color, #fff)',
+    borderLeft: '2px double var(--message-border-color, #fff)',
+    borderRadius: '4px',
+    boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.18)',
+    themeBackgroundInset: '2px',
+  },
+};
 
 interface ChatThemeStyle {
   animatedBackground?: string;
@@ -93,9 +242,13 @@ export class OverlayMessageComponent {
   @ViewChild('messageElement')
   private messageElement?: ElementRef<HTMLParagraphElement>;
 
-  get borderStyle(): BorderStyle | null {
-    const border = this.cosmetics.border;
-    return border === 'neon' || border === 'ornate' || border === 'starlight' ? border : null;
+  get borderStyle(): ChatBorderStyle | null {
+    return isChatBorderStyle(this.cosmetics.border) ? this.cosmetics.border : null;
+  }
+
+  get borderAppearance(): BorderAppearance | null {
+    const border = this.borderStyle;
+    return border === null ? null : BORDER_APPEARANCES[border];
   }
 
   get borderColor(): string | null {

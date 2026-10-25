@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 5 as const;
+export const INVENTORY_CATALOG_VERSION = 6 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -51,20 +51,137 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'border',
-      value: '#F0C56E',
+      value: 'mint-thread',
     },
-    id: 'gilded-edge',
-    name: 'Aranyszínű Szegély',
+    id: 'mint-thread-border',
+    name: 'Menta Fonál',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'skyline',
+    },
+    id: 'skyline-border',
+    name: 'Égkék Csík',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'coral-stitch',
+    },
+    id: 'coral-stitch-border',
+    name: 'Korallöltés',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'sunlit-edge',
+    },
+    id: 'sunlit-edge-border',
+    name: 'Napfény Perem',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'copper-inlay',
+    },
+    id: 'copper-inlay-border',
+    name: 'Rézberakás',
     rarity: 'rare',
   },
   {
     cosmetic: {
       slot: 'border',
-      value: 'starlight',
+      value: 'ice-lattice',
     },
-    id: 'starlight-frame',
-    name: 'Csillagfényes Keret',
+    id: 'ice-lattice-border',
+    name: 'Jégkristály Rács',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'moonstone',
+    },
+    id: 'moonstone-border',
+    name: 'Holdkő Keret',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'tide-glow',
+    },
+    id: 'tide-glow-border',
+    name: 'Árapályfény',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'aurora-ribbon',
+    },
+    id: 'aurora-ribbon-border',
+    name: 'Aurora Szalag',
     rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'nebula-rim',
+    },
+    id: 'nebula-rim-border',
+    name: 'Nebula Perem',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'prismatic-edge',
+    },
+    id: 'prismatic-edge-border',
+    name: 'Prizmás Fényív',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'deep-current',
+    },
+    id: 'deep-current-border',
+    name: 'Mélyáramlat',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'phoenix-flare',
+    },
+    id: 'phoenix-flare-border',
+    name: 'Főnix Lángja',
+    rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'celestial-crown',
+    },
+    id: 'celestial-crown-border',
+    name: 'Égi Korona',
+    rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'dragonwake',
+    },
+    id: 'dragonwake-border',
+    name: 'Sárkányörvény',
+    rarity: 'legendary',
   },
   {
     cosmetic: {

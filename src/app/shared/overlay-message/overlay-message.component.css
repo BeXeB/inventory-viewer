@@ -21,24 +21,26 @@
   animation-fill-mode: both;
 }
 
-.overlay-message--border-starlight {
-  border: 2px double var(--message-border-color, #fff);
-  border-radius: 4px;
-  --message-theme-background-inset: 2px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+.overlay-message--border-animated {
+  position: relative;
 }
 
-.overlay-message--border-neon {
-  border: 1px solid var(--message-border-color, #fff);
-  border-radius: 3px;
-  --message-theme-background-inset: 1px;
-  box-shadow: 0 0 8px var(--message-border-color, #fff);
+.overlay-message--border-animated::after {
+  animation: overlay-border-glow 2.8s ease-in-out infinite;
+  border: 1px solid var(--message-border-glow-color);
+  border-radius: inherit;
+  box-shadow: 0 0 4px var(--message-border-glow-color);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
 }
 
-.overlay-message--border-ornate {
-  border: 3px double var(--message-border-color, #fff);
-  border-radius: 5px;
-  --message-theme-background-inset: 3px;
+@keyframes overlay-border-glow {
+  50% {
+    box-shadow: 0 0 12px var(--message-border-glow-color);
+    opacity: 0.55;
+  }
 }
 
 .overlay-message--theme-animated {
@@ -199,6 +201,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .overlay-message,
+  .overlay-message--border-animated::after,
   .overlay-message__username--glow-aurora,
   .overlay-message__username--glow-emerald,
   .overlay-message__username--glow-inferno,
