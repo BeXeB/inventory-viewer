@@ -13,7 +13,7 @@
   line-height: 1.25;
   overflow-wrap: normal;
   border-left: 3px solid var(--message-border-color, transparent);
-  background-color: var(--message-background-color, transparent);
+  background-color: transparent;
   box-sizing: border-box;
   animation-duration: 460ms;
   animation-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1);
@@ -37,7 +37,23 @@
   border-radius: 5px;
 }
 
-.overlay-message--background-split-contrast-blue {
+.overlay-message--theme-ivory {
+  color: #1e293b;
+  background-color: #fff4de;
+}
+
+.overlay-message--theme-midnight {
+  color: #f8fafc;
+  background-color: #24303b;
+}
+
+.overlay-message--theme-neon-night {
+  color: #67e8f9;
+  background-color: #111827;
+}
+
+.overlay-message--theme-split-contrast {
+  color: #f8fafc;
   background: linear-gradient(
     to right,
     #fff 0%,
