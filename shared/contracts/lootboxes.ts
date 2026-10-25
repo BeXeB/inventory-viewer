@@ -5,7 +5,26 @@ export type CosmeticSlot =
   | 'message-font'
   | 'username-color';
 
-export const CHAT_BORDER_STYLES = ['neon', 'ornate', 'starlight'] as const;
+export const CHAT_BORDER_STYLES = [
+  'mint-thread',
+  'skyline',
+  'coral-stitch',
+  'sunlit-edge',
+  'copper-inlay',
+  'ice-lattice',
+  'moonstone',
+  'tide-glow',
+  'aurora-ribbon',
+  'nebula-rim',
+  'prismatic-edge',
+  'deep-current',
+  'phoenix-flare',
+  'celestial-crown',
+  'dragonwake',
+  'neon',
+  'ornate',
+  'starlight',
+] as const;
 export type ChatBorderStyle = (typeof CHAT_BORDER_STYLES)[number];
 export type ChatBorderValue = ChatBorderStyle | `#${string}`;
 

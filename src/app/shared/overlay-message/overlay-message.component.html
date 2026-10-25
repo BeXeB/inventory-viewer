@@ -1,15 +1,19 @@
 <p
   #messageElement
   class="overlay-message"
-  [class.overlay-message--border-neon]="borderStyle === 'neon'"
-  [class.overlay-message--border-ornate]="borderStyle === 'ornate'"
-  [class.overlay-message--border-starlight]="borderStyle === 'starlight'"
+  [class.overlay-message--border-animated]="borderAppearance?.animated === true"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
   [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
   [style.color]="chatThemeStyle?.color ?? null"
   [style.background]="chatThemeStyle?.background ?? null"
+  [style.border]="borderAppearance?.border ?? null"
+  [style.border-left]="borderAppearance?.borderLeft ?? null"
+  [style.border-radius]="borderAppearance?.borderRadius ?? null"
+  [style.box-shadow]="borderAppearance?.boxShadow ?? null"
   [style.--theme-animated-background]="chatThemeStyle?.animatedBackground ?? null"
   [style.--theme-glow-color]="chatThemeStyle?.glowColor ?? null"
+  [style.--message-theme-background-inset]="borderAppearance?.themeBackgroundInset ?? null"
+  [style.--message-border-glow-color]="borderAppearance?.glowColor ?? null"
   [style.--message-border-color]="borderColor"
   [style.animation-name]="entryAnimation"
 >
