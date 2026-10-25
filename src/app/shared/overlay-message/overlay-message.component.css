@@ -52,17 +52,9 @@
   background-color: #111827;
 }
 
-.overlay-message--theme-split-contrast {
-  color: #f8fafc;
-  background: linear-gradient(
-    to right,
-    #fff 0%,
-    #fff calc(50% - 1px),
-    #7ddfff calc(50% - 1px),
-    #7ddfff calc(50% + 1px),
-    #000 calc(50% + 1px),
-    #000 100%
-  );
+.overlay-message--theme-warm-ember {
+  color: #fff1e6;
+  background: linear-gradient(110deg, #241222 0%, #3c1f31 52%, #5a2b1d 100%);
 }
 
 .overlay-message__username--gradient-cosmic,
