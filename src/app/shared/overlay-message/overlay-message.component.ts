@@ -262,10 +262,8 @@ export class OverlayMessageComponent {
 
   get messageFontFamily(): string | null {
     switch (this.cosmetics['message-font']) {
-      case 'jetbrains-mono':
-        return "'JetBrains Mono', monospace";
-      case 'orbitron':
-        return "'Orbitron', sans-serif";
+      case 'oxanium':
+        return "'Oxanium', sans-serif";
       case 'bungee':
         return "'Bungee', sans-serif";
       case 'caveat':
@@ -276,8 +274,10 @@ export class OverlayMessageComponent {
         return "'Special Elite', monospace";
       case 'metamorphous':
         return "'Metamorphous', serif";
-      case 'bubble-fantasy':
-        return "'Bubble Fantasy', sans-serif";
+      case 'coiny':
+        return "'Coiny', sans-serif";
+      case 'baloo-2':
+        return "'Baloo 2', sans-serif";
       default:
         return null;
     }
