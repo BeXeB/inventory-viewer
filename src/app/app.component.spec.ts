@@ -1,4 +1,3 @@
-import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -6,7 +5,7 @@ import {
   INVENTORY_CATALOG_VERSION,
 } from './inventory-catalog.generated';
 import { AppComponent } from './app.component';
-import { OverlayMessageComponent } from './shared/overlay-message/overlay-message.component';
+import { createSetEquipmentCommand } from './inventory-format';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -188,7 +187,7 @@ describe('AppComponent', () => {
     );
   });
 
-  it('previews the selected cosmetics and can replay the entry effect', () => {
+  it('previews supported cosmetics and ignores entry effects from older links', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
@@ -217,19 +216,20 @@ describe('AppComponent', () => {
     ).toBeTrue();
     expect((message as HTMLElement).style.background).toBe('rgb(36, 48, 59)');
     expect((message as HTMLElement).style.color).toBe('rgb(248, 250, 252)');
-    expect(message?.getAttribute('style')).toContain(
-      'animation-name: overlay-slide-in',
+    expect((message as HTMLElement).style.animationName).toBe('');
+    expect(app.selectedItemIds).toEqual(
+      new Set(selectedItemIds.filter((itemId) => itemId !== 'slide-entry')),
     );
-
-    const replayButton = (fixture.nativeElement as HTMLElement).querySelector(
-      '.preview-animation-button',
-    ) as HTMLButtonElement | null;
-    const preview = fixture.debugElement.query(
-      By.directive(OverlayMessageComponent),
-    ).componentInstance as OverlayMessageComponent;
-    const replaySpy = spyOn(preview, 'replayEntryEffect').and.callThrough();
-    replayButton?.click();
-    expect(replaySpy).toHaveBeenCalled();
+    expect(app.equipCommand).toBe(
+      createSetEquipmentCommand(
+        selectedItemIds.filter((itemId) => itemId !== 'slide-entry'),
+      ),
+    );
+    const element = fixture.nativeElement as HTMLElement;
+    expect(
+      element.querySelector('.skin-option[data-item-id="slide-entry"]'),
+    ).toBeNull();
+    expect(element.querySelector('.preview-animation-button')).toBeNull();
   });
 
   it('disables unowned skins and presents malformed links as an error', () => {
