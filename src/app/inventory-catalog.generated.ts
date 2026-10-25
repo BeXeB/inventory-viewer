@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 16 as const;
+export const INVENTORY_CATALOG_VERSION = 18 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -42,19 +42,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'jetbrains-mono',
+      value: 'oxanium',
     },
-    id: 'jetbrains-mono-font',
-    name: 'JetBrains Mono Betűtípus',
-    rarity: 'common',
-  },
-  {
-    cosmetic: {
-      slot: 'message-font',
-      value: 'orbitron',
-    },
-    id: 'orbitron-font',
-    name: 'Orbitron Betűtípus',
+    id: 'oxanium-font',
+    name: 'Oxanium Betűtípus',
     rarity: 'common',
   },
   {
@@ -105,10 +96,19 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'bubble-fantasy',
+      value: 'coiny',
     },
-    id: 'bubble-fantasy-font',
-    name: 'Bubble Fantasy Betűtípus',
+    id: 'coiny-font',
+    name: 'Coiny Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'baloo-2',
+    },
+    id: 'baloo-2-font',
+    name: 'Baloo 2 Betűtípus',
     rarity: 'common',
   },
   {

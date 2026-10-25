@@ -43,14 +43,14 @@ export const CHAT_THEMES = [
 export type ChatTheme = (typeof CHAT_THEMES)[number];
 
 export const CHAT_MESSAGE_FONTS = [
-  'jetbrains-mono',
-  'orbitron',
+  'oxanium',
   'bungee',
   'caveat',
   'pixelify-sans',
   'special-elite',
   'metamorphous',
-  'bubble-fantasy',
+  'coiny',
+  'baloo-2',
 ] as const;
 export type ChatMessageFont = (typeof CHAT_MESSAGE_FONTS)[number];
 
