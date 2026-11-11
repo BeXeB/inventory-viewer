@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 18 as const;
+export const INVENTORY_CATALOG_VERSION = 19 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
@@ -506,5 +506,19 @@ export const INVENTORY_CATALOG_ITEMS = [
     id: 'cosmic-current-theme',
     name: 'Kozmikus Áramlat Téma',
     rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'pirate-token',
+    },
+    dropRate: {
+      denominator: 140000,
+      numerator: 1,
+    },
+    id: 'pirate-token',
+    name: 'Pirate Token',
+    rarity: 'legendary',
+    unlocksAllItems: true,
   },
 ] as const;

@@ -19,6 +19,7 @@ export const CHAT_BORDER_STYLES = [
   'neon',
   'ornate',
   'starlight',
+  'pirate-token',
 ] as const;
 export type ChatBorderStyle = (typeof CHAT_BORDER_STYLES)[number];
 export type ChatBorderValue = ChatBorderStyle | `#${string}`;
@@ -86,9 +87,16 @@ export type CosmeticValuesBySlot = CosmeticValueBySlot;
 
 export interface LootboxItemDefinition {
   cosmetic: LootboxCosmetic;
+  dropRate?: LootboxDropRate;
   id: string;
   name: string;
   rarity: LootboxRarity;
+  unlocksAllItems?: boolean;
+}
+
+export interface LootboxDropRate {
+  denominator: number;
+  numerator: number;
 }
 
 export interface LootboxDefinition {

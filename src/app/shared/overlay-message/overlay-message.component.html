@@ -1,6 +1,7 @@
 <p
   class="overlay-message"
   [class.overlay-message--border-animated]="borderAppearance?.animated === true"
+  [class.overlay-message--border-pirate-token]="borderStyle === 'pirate-token'"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
   [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
   [style.color]="chatThemeStyle?.color ?? null"
@@ -29,4 +30,10 @@
     {{ displayName }}
   </strong>
   <span [style.font-family]="messageFontFamily"> : {{ message }} </span>
+  <img
+    class="overlay-message__pirate-mark"
+    src="assets/images/image.png"
+    alt=""
+    aria-hidden="true"
+  />
 </p>
