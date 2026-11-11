@@ -248,8 +248,26 @@
   position: relative;
 }
 
+.overlay-message--border-pirate-token .overlay-message__pirate-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 .overlay-message__pirate-mark {
   display: none;
+}
+
+.overlay-message__pirate-sparkle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #fff3b0;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: overlay-pirate-border-twinkle 1.8s ease-in-out infinite;
+  opacity: 0.45;
+  transform: scale(0.7);
 }
 
 .overlay-message--border-pirate-token .overlay-message__pirate-mark {
@@ -263,6 +281,13 @@
   height: 64px;
   object-fit: contain;
   pointer-events: none;
+}
+
+@keyframes overlay-pirate-border-twinkle {
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(45deg);
+  }
 }
 
 @keyframes overlay-border-glow {
@@ -380,6 +405,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .overlay-message--border-animated::after,
+  .overlay-message__pirate-sparkle,
   .overlay-message__username--glow-aurora,
   .overlay-message__username--glow-emerald,
   .overlay-message__username--glow-inferno,
