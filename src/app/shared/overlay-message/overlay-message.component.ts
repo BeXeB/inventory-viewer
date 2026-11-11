@@ -167,6 +167,13 @@ const BORDER_APPEARANCES: Record<ChatBorderStyle, BorderAppearance> = {
     boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.18)',
     themeBackgroundInset: '2px',
   },
+  'pirate-token': {
+    border: '2px solid #fff',
+    borderLeft: '2px solid #fff',
+    borderRadius: '4px',
+    boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.24)',
+    themeBackgroundInset: '2px',
+  },
 };
 
 interface ChatThemeStyle {

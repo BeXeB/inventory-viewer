@@ -244,6 +244,27 @@
   position: absolute;
 }
 
+.overlay-message--border-pirate-token {
+  position: relative;
+}
+
+.overlay-message__pirate-mark {
+  display: none;
+}
+
+.overlay-message--border-pirate-token .overlay-message__pirate-mark {
+  position: absolute;
+  top: -2px;
+  right: 28px;
+  transform: translate(50%, -50%);
+  z-index: 1;
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 @keyframes overlay-border-glow {
   50% {
     box-shadow: 0 0 16px 3px var(--message-border-glow-color);
