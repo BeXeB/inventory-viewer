@@ -44,6 +44,11 @@ export const CHAT_THEMES = [
   'neon-night',
   'solar-flare',
   'cosmic-current',
+  'rain-window',
+  'starfield',
+  'lava-lamp',
+  'crt-terminal',
+  'ink-bleed',
 ] as const;
 export type ChatTheme = (typeof CHAT_THEMES)[number];
 

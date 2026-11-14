@@ -4,7 +4,9 @@
   [class.overlay-message--border-pirate-token]="borderStyle === 'pirate-token'"
   [class.overlay-message--sparkled]="sparkleEffect !== null"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
+  [class.overlay-message--theme-layered]="chatThemeStyle?.layer !== undefined"
   [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
+  [class.overlay-message--theme-crt]="chatTheme === 'crt-terminal'"
   [style.color]="chatThemeStyle?.color ?? null"
   [style.background]="chatThemeStyle?.background ?? null"
   [style.border]="borderAppearance?.border ?? null"
@@ -17,6 +19,9 @@
   [style.--message-border-glow-color]="borderAppearance?.glowColor ?? null"
   [style.--message-border-color]="borderColor"
 >
+  @if (chatThemeStyle?.layer; as layer) {
+    <span class="overlay-message__theme-layer" [attr.data-layer]="layer" aria-hidden="true"></span>
+  }
   <strong
     class="overlay-message__username"
     [class.overlay-message__username--gradient-cosmic]="usernameColorPreset === 'gradient-cosmic'"
