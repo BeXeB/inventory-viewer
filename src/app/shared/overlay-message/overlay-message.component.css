@@ -470,12 +470,175 @@
   }
 }
 
+.overlay-message__username--chromatic-split,
+.overlay-message__username--chromatic-ghost {
+  color: #f8fafc;
+}
+
+.overlay-message__username--chromatic-split {
+  --split-a: #ff2d55;
+  --split-b: #22d3ee;
+  animation: overlay-username-split 6s linear infinite;
+}
+
+.overlay-message__username--chromatic-ghost {
+  animation: overlay-username-ghost 5s linear infinite;
+}
+
+.overlay-message__username--chromatic-tear {
+  position: relative;
+  display: inline-block;
+  color: #e2e8f0;
+}
+
+.overlay-message__username--chromatic-tear::before,
+.overlay-message__username--chromatic-tear::after {
+  content: attr(data-name);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay-message__username--chromatic-tear::before {
+  color: #f43f5e;
+  clip-path: inset(0 0 52% 0);
+  animation: overlay-username-tear-top 6s linear infinite;
+}
+
+.overlay-message__username--chromatic-tear::after {
+  color: #22d3ee;
+  clip-path: inset(48% 0 0 0);
+  animation: overlay-username-tear-bottom 6s linear infinite;
+}
+
+.overlay-message__username--halftone-gradient,
+.overlay-message__username--halftone-sunset {
+  position: relative;
+  display: inline-block;
+  color: var(--halftone-base);
+}
+
+.overlay-message__username--halftone-gradient {
+  --halftone-base: #4f46e5;
+  --halftone-dot: #67e8f9;
+}
+
+.overlay-message__username--halftone-sunset {
+  --halftone-base: #e11d48;
+  --halftone-dot: #fde68a;
+}
+
+.overlay-message__username--halftone-gradient::before,
+.overlay-message__username--halftone-gradient::after,
+.overlay-message__username--halftone-sunset::before,
+.overlay-message__username--halftone-sunset::after {
+  content: attr(data-name);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: radial-gradient(circle, var(--halftone-dot) 1.8px, transparent 2.4px);
+  background-size: 7px 7px;
+  pointer-events: none;
+}
+
+.overlay-message__username--halftone-gradient::before,
+.overlay-message__username--halftone-sunset::before {
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, transparent 100%);
+}
+
+.overlay-message__username--halftone-gradient::after,
+.overlay-message__username--halftone-sunset::after {
+  background-image: radial-gradient(circle, var(--halftone-dot) 1.1px, transparent 1.6px);
+  background-size: 3.5px 3.5px;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 100%);
+}
+
+@keyframes overlay-username-split {
+  0%,
+  86%,
+  100% {
+    text-shadow:
+      -1px 0 var(--split-a),
+      1px 0 var(--split-b);
+    transform: none;
+  }
+  88% {
+    text-shadow:
+      -3px 0 var(--split-a),
+      3px 0 var(--split-b);
+    transform: translateX(1px);
+  }
+  90% {
+    text-shadow:
+      -2px 0 var(--split-a),
+      2px 0 var(--split-b);
+    transform: translateX(-1px);
+  }
+}
+
+@keyframes overlay-username-ghost {
+  0%,
+  70%,
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
+  72% {
+    text-shadow: 4px 0 6px rgba(244, 63, 94, 0.8);
+  }
+  80% {
+    text-shadow: 8px 0 10px rgba(244, 63, 94, 0);
+  }
+}
+
+@keyframes overlay-username-tear-top {
+  0%,
+  86%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  88% {
+    opacity: 1;
+    transform: translateX(-3px);
+  }
+  92% {
+    opacity: 0;
+  }
+}
+
+@keyframes overlay-username-tear-bottom {
+  0%,
+  86%,
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  88% {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+  92% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .overlay-message--border-animated::after,
   .overlay-message__sparkle,
   .overlay-message__username--glow-aurora,
   .overlay-message__username--glow-emerald,
   .overlay-message__username--glow-inferno,
+  .overlay-message__username--chromatic-split,
+  .overlay-message__username--chromatic-ghost,
+  .overlay-message__username--chromatic-tear::before,
+  .overlay-message__username--chromatic-tear::after,
   .overlay-message--theme-animated::before,
   .overlay-message__theme-layer,
   .overlay-message__theme-layer::before,

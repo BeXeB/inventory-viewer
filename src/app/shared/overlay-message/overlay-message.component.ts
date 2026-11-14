@@ -22,7 +22,12 @@ type UsernameColorPreset =
   | 'gradient-sunset'
   | 'glow-aurora'
   | 'glow-emerald'
-  | 'glow-inferno';
+  | 'glow-inferno'
+  | 'chromatic-split'
+  | 'chromatic-tear'
+  | 'chromatic-ghost'
+  | 'halftone-gradient'
+  | 'halftone-sunset';
 
 interface BorderAppearance {
   animated?: boolean;
@@ -458,6 +463,11 @@ function isUsernameColorPreset(value: string | undefined): value is UsernameColo
     value === 'gradient-sunset' ||
     value === 'glow-aurora' ||
     value === 'glow-emerald' ||
-    value === 'glow-inferno'
+    value === 'glow-inferno' ||
+    value === 'chromatic-split' ||
+    value === 'chromatic-tear' ||
+    value === 'chromatic-ghost' ||
+    value === 'halftone-gradient' ||
+    value === 'halftone-sunset'
   );
 }
