@@ -7,12 +7,29 @@ import {
 } from './inventory-catalog.generated';
 import { AppComponent } from './app.component';
 import { createSetEquipmentCommand } from './inventory-format';
+import { OverlayMessageComponent } from './shared/overlay-message/overlay-message.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
     }).compileComponents();
+  });
+
+  it('shows pirate sparkles only when the Pirate Token border is equipped', () => {
+    const fixture = TestBed.createComponent(OverlayMessageComponent);
+    const component = fixture.componentInstance;
+    component.cosmetics = { border: 'mint-thread' };
+    fixture.detectChanges();
+
+    const sparkles = fixture.nativeElement.querySelector(
+      '.overlay-message__pirate-sparkles',
+    ) as HTMLElement;
+    expect(getComputedStyle(sparkles).display).toBe('none');
+
+    component.cosmetics = { border: 'pirate-token' };
+    fixture.detectChanges();
+    expect(getComputedStyle(sparkles).display).toBe('block');
   });
 
   it('shows a helpful empty state when opened without an inventory payload', () => {
