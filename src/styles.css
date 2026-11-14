@@ -1,3 +1,4 @@
+@import './app/shared/overlay-message/overlay-fonts.css';
 @font-face {
   font-family: 'JetBrains Mono';
   src: url('assets/fonts/JetBrainsMono/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');

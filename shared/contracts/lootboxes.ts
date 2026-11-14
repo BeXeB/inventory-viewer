@@ -44,6 +44,11 @@ export const CHAT_THEMES = [
   'neon-night',
   'solar-flare',
   'cosmic-current',
+  'rain-window',
+  'starfield',
+  'lava-lamp',
+  'crt-terminal',
+  'ink-bleed',
 ] as const;
 export type ChatTheme = (typeof CHAT_THEMES)[number];
 
@@ -67,6 +72,11 @@ export const CHAT_USERNAME_COLOR_PRESETS = [
   'glow-aurora',
   'glow-inferno',
   'glow-emerald',
+  'chromatic-split',
+  'chromatic-tear',
+  'chromatic-ghost',
+  'halftone-gradient',
+  'halftone-sunset',
 ] as const;
 export type ChatUsernameColorPreset = (typeof CHAT_USERNAME_COLOR_PRESETS)[number];
 export type ChatUsernameColor = ChatUsernameColorPreset | `#${string}`;

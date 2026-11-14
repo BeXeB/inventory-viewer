@@ -22,7 +22,12 @@ type UsernameColorPreset =
   | 'gradient-sunset'
   | 'glow-aurora'
   | 'glow-emerald'
-  | 'glow-inferno';
+  | 'glow-inferno'
+  | 'chromatic-split'
+  | 'chromatic-tear'
+  | 'chromatic-ghost'
+  | 'halftone-gradient'
+  | 'halftone-sunset';
 
 interface BorderAppearance {
   animated?: boolean;
@@ -290,7 +295,10 @@ interface ChatThemeStyle {
   background: string;
   color: string;
   glowColor?: string;
+  layer?: ChatThemeLayer;
 }
+
+type ChatThemeLayer = 'rain' | 'starfield' | 'lava' | 'crt' | 'ink';
 
 const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
   ivory: { background: '#fff4de', color: '#1e293b' },
@@ -337,6 +345,31 @@ const CHAT_THEME_STYLES: Record<ChatTheme, ChatThemeStyle> = {
     background: '#17123d',
     color: '#f4eaff',
     glowColor: 'rgba(34, 211, 238, 0.4)',
+  },
+  'rain-window': {
+    background: '#1b2735',
+    color: '#e2e8f0',
+    layer: 'rain',
+  },
+  starfield: {
+    background: '#070b1f',
+    color: '#e0e7ff',
+    layer: 'starfield',
+  },
+  'lava-lamp': {
+    background: '#1f1030',
+    color: '#fff4e8',
+    layer: 'lava',
+  },
+  'crt-terminal': {
+    background: '#04140a',
+    color: '#86efac',
+    layer: 'crt',
+  },
+  'ink-bleed': {
+    background: '#f5efe0',
+    color: '#1c1917',
+    layer: 'ink',
   },
 };
 
@@ -430,6 +463,11 @@ function isUsernameColorPreset(value: string | undefined): value is UsernameColo
     value === 'gradient-sunset' ||
     value === 'glow-aurora' ||
     value === 'glow-emerald' ||
-    value === 'glow-inferno'
+    value === 'glow-inferno' ||
+    value === 'chromatic-split' ||
+    value === 'chromatic-tear' ||
+    value === 'chromatic-ghost' ||
+    value === 'halftone-gradient' ||
+    value === 'halftone-sunset'
   );
 }

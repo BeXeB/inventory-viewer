@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 21 as const;
+export const INVENTORY_CATALOG_VERSION = 25 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 2 as const;
 export const INVENTORY_EQUIPMENT_SLOT_ORDER = [
   'border',
@@ -32,6 +32,11 @@ export const INVENTORY_CATALOG_THEMES = [
   'neon-night',
   'solar-flare',
   'cosmic-current',
+  'rain-window',
+  'starfield',
+  'lava-lamp',
+  'crt-terminal',
+  'ink-bleed',
 ] as const;
 export type InventoryCatalogTheme = (typeof INVENTORY_CATALOG_THEMES)[number];
 
@@ -561,6 +566,96 @@ export const INVENTORY_CATALOG_ITEMS = [
     },
     id: 'blood-moon-border',
     name: 'Vérhold Hullám',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'rain-window',
+    },
+    id: 'rain-window-theme',
+    name: 'Esőablak Téma',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'starfield',
+    },
+    id: 'starfield-theme',
+    name: 'Csillagmező Téma',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'lava-lamp',
+    },
+    id: 'lava-lamp-theme',
+    name: 'Lávalámpa Téma',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'crt-terminal',
+    },
+    id: 'crt-terminal-theme',
+    name: 'CRT Terminál Téma',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'chat-theme',
+      value: 'ink-bleed',
+    },
+    id: 'ink-bleed-theme',
+    name: 'Tintafolt Téma',
+    rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-split',
+    },
+    id: 'chromatic-split-username',
+    name: 'Kromatikus Hasadás',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-tear',
+    },
+    id: 'chromatic-tear-username',
+    name: 'Szakadt Jel',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-ghost',
+    },
+    id: 'chromatic-ghost-username',
+    name: 'Kísérteti Visszhang',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'halftone-gradient',
+    },
+    id: 'halftone-username',
+    name: 'Óceáni Rasztergomb',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'halftone-sunset',
+    },
+    id: 'halftone-sunset-username',
+    name: 'Naplemente Rasztergomb',
     rarity: 'epic',
   },
 ] as const;
