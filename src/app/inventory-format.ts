@@ -2,6 +2,7 @@ import {
   INVENTORY_CATALOG_ITEMS,
   INVENTORY_CATALOG_VERSION,
   INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION,
+  INVENTORY_EQUIPMENT_SLOT_ORDER,
   type InventoryCatalogRarity,
 } from './inventory-catalog.generated';
 
@@ -16,6 +17,24 @@ export type InventoryCatalogItem = Omit<
 };
 export type InventoryCosmeticSlot = InventoryCatalogItem['cosmetic']['slot'];
 export type { InventoryCatalogRarity };
+
+const INVENTORY_ITEMS_BY_SLOT = new Map<
+  InventoryCosmeticSlot,
+  readonly InventoryCatalogItem[]
+>(
+  INVENTORY_EQUIPMENT_SLOT_ORDER.map((slot) => [
+    slot,
+    INVENTORY_CATALOG_ITEMS.filter((item) => item.cosmetic.slot === slot),
+  ]),
+);
+
+const INVENTORY_EQUIPMENT_STATE_COUNT = INVENTORY_EQUIPMENT_SLOT_ORDER.reduce(
+  (count, slot) => count * BigInt(getInventoryItemsForSlot(slot).length + 1),
+  1n,
+);
+const INVENTORY_EQUIPMENT_CODE_BYTE_LENGTH = getUnsignedIntegerByteLength(
+  INVENTORY_EQUIPMENT_STATE_COUNT - 1n,
+);
 
 export interface InventorySnapshot {
   equippedItemIds: string[];
@@ -36,7 +55,11 @@ export function readInventoryPayloadFromUrl(url: URL): string | null {
 export function decodeInventoryLink(encoded: string): InventorySnapshot {
   const payload = decodeBase64Url(encoded);
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  if (payload.length !== 1 + bitmapLength * 2) {
+  const equippedCodeOffset = 1 + bitmapLength;
+  if (
+    payload.length !==
+    equippedCodeOffset + INVENTORY_EQUIPMENT_CODE_BYTE_LENGTH
+  ) {
     throw new InventoryPayloadError(
       'This inventory link has an invalid length.',
     );
@@ -48,35 +71,33 @@ export function decodeInventoryLink(encoded: string): InventorySnapshot {
   }
 
   const ownershipOffset = 1;
-  const equippedOffset = ownershipOffset + bitmapLength;
   validateUnusedBits(payload, ownershipOffset, bitmapLength);
-  validateUnusedBits(payload, equippedOffset, bitmapLength);
 
   const ownedItemIds: string[] = [];
-  const equippedItemIds: string[] = [];
-  const equippedSlots = new Set<InventoryCosmeticSlot>();
-
   INVENTORY_CATALOG_ITEMS.forEach((item, itemIndex) => {
     const owned = hasBit(payload, ownershipOffset, itemIndex);
-    const equipped = hasBit(payload, equippedOffset, itemIndex);
-    if (equipped && !owned) {
-      throw new InventoryPayloadError(
-        'This inventory link marks a skin equipped but not owned.',
-      );
-    }
     if (owned) {
       ownedItemIds.push(item.id);
     }
-    if (equipped) {
-      if (equippedSlots.has(item.cosmetic.slot)) {
-        throw new InventoryPayloadError(
-          'This inventory link equips multiple skins in one slot.',
-        );
-      }
-      equippedSlots.add(item.cosmetic.slot);
-      equippedItemIds.push(item.id);
-    }
   });
+
+  const equipmentCode = readUnsignedIntegerLE(
+    payload,
+    equippedCodeOffset,
+    INVENTORY_EQUIPMENT_CODE_BYTE_LENGTH,
+  );
+  const equippedItemIds = decodeInventoryEquipmentCode(equipmentCode);
+  if (equippedItemIds === null) {
+    throw new InventoryPayloadError(
+      'This inventory link contains an invalid equipment selection.',
+    );
+  }
+  const ownedItemIdSet = new Set(ownedItemIds);
+  if (equippedItemIds.some((itemId) => !ownedItemIdSet.has(itemId))) {
+    throw new InventoryPayloadError(
+      'This inventory link marks a skin equipped but not owned.',
+    );
+  }
 
   return { equippedItemIds, ownedItemIds };
 }
@@ -84,14 +105,14 @@ export function decodeInventoryLink(encoded: string): InventorySnapshot {
 export function createSetEquipmentCommand(
   selectedItemIds: Iterable<string>,
 ): string {
-  const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  const payload = new Uint8Array(2 + bitmapLength);
+  const payload = new Uint8Array(2 + INVENTORY_EQUIPMENT_CODE_BYTE_LENGTH);
   payload[0] = INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION;
   payload[1] = INVENTORY_CATALOG_VERSION;
 
   const itemsById = new Map<string, InventoryCatalogItem>(
     INVENTORY_CATALOG_ITEMS.map((item) => [item.id, item]),
   );
+  const selectedItemsBySlot = new Map<InventoryCosmeticSlot, string>();
   const selectedSlots = new Set<InventoryCosmeticSlot>();
 
   for (const itemId of selectedItemIds) {
@@ -105,12 +126,15 @@ export function createSetEquipmentCommand(
       );
     }
     selectedSlots.add(item.cosmetic.slot);
-
-    const itemIndex = INVENTORY_CATALOG_ITEMS.findIndex(
-      (catalogItem) => catalogItem.id === itemId,
-    );
-    setBit(payload, 2, itemIndex);
+    selectedItemsBySlot.set(item.cosmetic.slot, item.id);
   }
+
+  writeUnsignedIntegerLE(
+    payload,
+    2,
+    encodeInventoryEquipmentCode(selectedItemsBySlot),
+    INVENTORY_EQUIPMENT_CODE_BYTE_LENGTH,
+  );
 
   return `!setequip ${encodeBase64Url(payload)}`;
 }
@@ -178,12 +202,115 @@ function hasBit(
   itemIndex: number,
 ): boolean {
   const byte = payload[offset + Math.floor(itemIndex / 8)] ?? 0;
-  return (byte & (1 << (itemIndex % 8))) !== 0;
+  return (byte & (1 << itemIndex % 8)) !== 0;
 }
 
-function setBit(payload: Uint8Array, offset: number, itemIndex: number): void {
-  const byteIndex = offset + Math.floor(itemIndex / 8);
-  payload[byteIndex] = (payload[byteIndex] ?? 0) | (1 << (itemIndex % 8));
+function encodeInventoryEquipmentCode(
+  selectedItemsBySlot: ReadonlyMap<InventoryCosmeticSlot, string>,
+): bigint {
+  let code = 0n;
+  for (const slot of INVENTORY_EQUIPMENT_SLOT_ORDER) {
+    const items = getInventoryItemsForSlot(slot);
+    const selectedItemId = selectedItemsBySlot.get(slot);
+    const itemIndex =
+      selectedItemId === undefined
+        ? -1
+        : items.findIndex((item) => item.id === selectedItemId);
+    if (selectedItemId !== undefined && itemIndex < 0) {
+      throw new Error(`Unknown inventory skin for the ${slot} slot.`);
+    }
+
+    code = code * BigInt(items.length + 1) + BigInt(itemIndex + 1);
+  }
+  return code;
+}
+
+function decodeInventoryEquipmentCode(code: bigint): string[] | null {
+  if (code >= INVENTORY_EQUIPMENT_STATE_COUNT) {
+    return null;
+  }
+
+  let remainingCode = code;
+  const selectedItems = new Map<InventoryCosmeticSlot, InventoryCatalogItem>();
+  for (
+    let slotIndex = INVENTORY_EQUIPMENT_SLOT_ORDER.length - 1;
+    slotIndex >= 0;
+    slotIndex--
+  ) {
+    const slot = INVENTORY_EQUIPMENT_SLOT_ORDER[slotIndex];
+    if (!slot) {
+      return null;
+    }
+
+    const items = getInventoryItemsForSlot(slot);
+    const radix = BigInt(items.length + 1);
+    const itemIndex = Number(remainingCode % radix) - 1;
+    remainingCode /= radix;
+    if (itemIndex >= 0) {
+      const item = items[itemIndex];
+      if (!item) {
+        return null;
+      }
+      selectedItems.set(slot, item);
+    }
+  }
+
+  if (remainingCode !== 0n) {
+    return null;
+  }
+  return INVENTORY_EQUIPMENT_SLOT_ORDER.flatMap((slot) => {
+    const item = selectedItems.get(slot);
+    return item ? [item.id] : [];
+  });
+}
+
+function getInventoryItemsForSlot(
+  slot: InventoryCosmeticSlot,
+): readonly InventoryCatalogItem[] {
+  const items = INVENTORY_ITEMS_BY_SLOT.get(slot);
+  if (!items) {
+    throw new Error(`Inventory equipment slot "${slot}" is not configured.`);
+  }
+  return items;
+}
+
+function getUnsignedIntegerByteLength(value: bigint): number {
+  let byteLength = 0;
+  while (value > 0n) {
+    value >>= 8n;
+    byteLength++;
+  }
+  return Math.max(byteLength, 1);
+}
+
+function writeUnsignedIntegerLE(
+  payload: Uint8Array,
+  offset: number,
+  value: bigint,
+  byteLength: number,
+): void {
+  let remainingValue = value;
+  for (let byteIndex = 0; byteIndex < byteLength; byteIndex++) {
+    payload[offset + byteIndex] = Number(remainingValue & 0xffn);
+    remainingValue >>= 8n;
+  }
+  if (remainingValue !== 0n) {
+    throw new Error(
+      'Inventory equipment selection does not fit its encoded field.',
+    );
+  }
+}
+
+function readUnsignedIntegerLE(
+  payload: Uint8Array,
+  offset: number,
+  byteLength: number,
+): bigint {
+  let value = 0n;
+  for (let byteIndex = byteLength - 1; byteIndex >= 0; byteIndex--) {
+    value = (value << 8n) | BigInt(payload[offset + byteIndex] ?? 0);
+  }
+  return value;
 }
 
 function validateUnusedBits(

@@ -6,18 +6,19 @@ import {
 import {
   INVENTORY_CATALOG_ITEMS,
   INVENTORY_CATALOG_VERSION,
+  INVENTORY_EQUIPMENT_SLOT_ORDER,
 } from './inventory-catalog.generated';
 
 describe('inventory payload format', () => {
-  it('decodes ownership and currently equipped bits by canonical catalog index', () => {
+  it('decodes ownership and the compact equipped slot selection', () => {
     const encoded = inventoryLink(
-      ['sky-username', 'gilded-edge'],
-      ['sky-username', 'gilded-edge'],
+      ['sky-username', 'mint-thread-border'],
+      ['sky-username', 'mint-thread-border'],
     );
 
     expect(decodeInventoryLink(encoded)).toEqual({
-      ownedItemIds: ['gilded-edge', 'sky-username'],
-      equippedItemIds: ['gilded-edge', 'sky-username'],
+      ownedItemIds: ['mint-thread-border', 'sky-username'],
+      equippedItemIds: ['mint-thread-border', 'sky-username'],
     });
   });
 
@@ -36,25 +37,24 @@ describe('inventory payload format', () => {
     ).toThrowError('This inventory link uses an unsupported skin catalog.');
   });
 
-  it('rejects equipped skins that are not owned and duplicate equipped slots', () => {
+  it('rejects equipped skins that are not owned and out-of-range selections', () => {
     expect(() =>
       decodeInventoryLink(inventoryLink([], ['sky-username'])),
     ).toThrowError('This inventory link marks a skin equipped but not owned.');
     expect(() =>
       decodeInventoryLink(
-        inventoryLink(
-          ['gilded-edge', 'starlight-frame'],
-          ['gilded-edge', 'starlight-frame'],
-        ),
+        inventoryLink([], [], INVENTORY_CATALOG_VERSION, equipmentStateCount()),
       ),
-    ).toThrowError('This inventory link equips multiple skins in one slot.');
+    ).toThrowError(
+      'This inventory link contains an invalid equipment selection.',
+    );
   });
 
   it('creates a versioned !setequip command and supports an empty selection', () => {
-    expect(createSetEquipmentCommand(['sky-username', 'gilded-edge'])).toBe(
-      '!setequip AQWEAAAAAA',
-    );
-    expect(createSetEquipmentCommand([])).toBe('!setequip AQUAAAAAAA');
+    expect(
+      createSetEquipmentCommand(['sky-username', 'mint-thread-border']),
+    ).toBe('!setequip AhQBCQ');
+    expect(createSetEquipmentCommand([])).toBe('!setequip AhQAAA');
   });
 
   it('rejects unknown skins and multiple selections for one slot', () => {
@@ -62,7 +62,7 @@ describe('inventory payload format', () => {
       'Unknown inventory skin: missing-skin.',
     );
     expect(() =>
-      createSetEquipmentCommand(['gilded-edge', 'starlight-frame']),
+      createSetEquipmentCommand(['mint-thread-border', 'skyline-border']),
     ).toThrowError('Only one skin can be selected for the border slot.');
   });
 
@@ -85,9 +85,12 @@ function inventoryLink(
   ownedItemIds: string[],
   equippedItemIds: string[],
   catalogVersion: number = INVENTORY_CATALOG_VERSION,
+  equipmentCodeOverride?: bigint,
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  const payload = new Uint8Array(1 + bitmapLength * 2);
+  const equippedCodeOffset = 1 + bitmapLength;
+  const codeByteLength = equipmentCodeByteLength();
+  const payload = new Uint8Array(equippedCodeOffset + codeByteLength);
   payload[0] = catalogVersion;
   const itemIndexes = new Map<string, number>(
     INVENTORY_CATALOG_ITEMS.map((item, index) => [item.id, index]),
@@ -96,11 +99,61 @@ function inventoryLink(
   for (const itemId of ownedItemIds) {
     setItemBit(payload, 1, itemIndexes.get(itemId));
   }
-  for (const itemId of equippedItemIds) {
-    setItemBit(payload, 1 + bitmapLength, itemIndexes.get(itemId));
+
+  let code = equipmentCodeOverride ?? 0n;
+  if (equipmentCodeOverride === undefined) {
+    const selectedItemsBySlot = new Map<string, string>();
+    for (const itemId of equippedItemIds) {
+      const item = INVENTORY_CATALOG_ITEMS.find(
+        (catalogItem) => catalogItem.id === itemId,
+      );
+      if (!item) {
+        throw new Error('The test payload contains an unknown item.');
+      }
+      if (selectedItemsBySlot.has(item.cosmetic.slot)) {
+        throw new Error('The test payload contains duplicate equipped slots.');
+      }
+      selectedItemsBySlot.set(item.cosmetic.slot, item.id);
+    }
+
+    for (const slot of INVENTORY_EQUIPMENT_SLOT_ORDER) {
+      const slotItems = INVENTORY_CATALOG_ITEMS.filter(
+        (item) => item.cosmetic.slot === slot,
+      );
+      const itemId = selectedItemsBySlot.get(slot);
+      const itemIndex =
+        itemId === undefined
+          ? -1
+          : slotItems.findIndex((item) => item.id === itemId);
+      code = code * BigInt(slotItems.length + 1) + BigInt(itemIndex + 1);
+    }
+  }
+
+  for (let byteIndex = 0; byteIndex < codeByteLength; byteIndex++) {
+    payload[equippedCodeOffset + byteIndex] = Number(code & 0xffn);
+    code >>= 8n;
   }
 
   return encodeBase64Url(payload);
+}
+
+function equipmentStateCount(): bigint {
+  return INVENTORY_EQUIPMENT_SLOT_ORDER.reduce((count, slot) => {
+    const itemCount = INVENTORY_CATALOG_ITEMS.filter(
+      (item) => item.cosmetic.slot === slot,
+    ).length;
+    return count * BigInt(itemCount + 1);
+  }, 1n);
+}
+
+function equipmentCodeByteLength(): number {
+  let value = equipmentStateCount() - 1n;
+  let byteLength = 0;
+  while (value > 0n) {
+    value >>= 8n;
+    byteLength++;
+  }
+  return Math.max(byteLength, 1);
 }
 
 function setItemBit(

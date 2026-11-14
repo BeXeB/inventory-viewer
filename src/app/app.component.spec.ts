@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   INVENTORY_CATALOG_ITEMS,
   INVENTORY_CATALOG_VERSION,
+  INVENTORY_EQUIPMENT_SLOT_ORDER,
 } from './inventory-catalog.generated';
 import { AppComponent } from './app.component';
 import { createSetEquipmentCommand } from './inventory-format';
@@ -32,7 +33,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const link = inventoryLink(
       INVENTORY_CATALOG_ITEMS.map((item) => item.id),
-      ['sky-username', 'midnight-theme', 'starlight-frame'],
+      ['sky-username', 'midnight-theme', 'pirate-token'],
     );
     app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
     fixture.detectChanges();
@@ -40,7 +41,7 @@ describe('AppComponent', () => {
     expect(app.selectedItems.map((item) => item.id)).toEqual([
       'sky-username',
       'midnight-theme',
-      'starlight-frame',
+      'pirate-token',
     ]);
 
     const chatThemeItemIds = Array.from(
@@ -116,7 +117,8 @@ describe('AppComponent', () => {
           'overlay-message--theme-animated',
         ),
       ).toBe(
-        theme.cosmetic.value === 'solar-flare' ||
+        theme.cosmetic.value === 'neon-night' ||
+          theme.cosmetic.value === 'solar-flare' ||
           theme.cosmetic.value === 'cosmic-current',
       );
     }
@@ -155,48 +157,45 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     fixture.detectChanges();
     const link = inventoryLink(
-      ['sky-username', 'gilded-edge', 'starlight-frame'],
-      ['sky-username', 'gilded-edge'],
+      ['sky-username', 'mint-thread-border', 'skyline-border'],
+      ['sky-username', 'mint-thread-border'],
     );
     app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
     fixture.detectChanges();
 
     expect(app.selectedItemIds).toEqual(
-      new Set(['sky-username', 'gilded-edge']),
+      new Set(['sky-username', 'mint-thread-border']),
     );
 
-    const starlightButton = (
-      fixture.nativeElement as HTMLElement
-    ).querySelector(
-      '.skin-option[data-item-id="starlight-frame"]',
+    const skylineButton = (fixture.nativeElement as HTMLElement).querySelector(
+      '.skin-option[data-item-id="skyline-border"]',
     ) as HTMLButtonElement | null;
-    expect(starlightButton?.disabled).toBeFalse();
-    starlightButton?.click();
+    expect(skylineButton?.disabled).toBeFalse();
+    skylineButton?.click();
     fixture.detectChanges();
 
     expect(app.selectedItemIds).toEqual(
-      new Set(['sky-username', 'starlight-frame']),
+      new Set(['sky-username', 'skyline-border']),
     );
-    expect(app.equipCommand).toBe('!setequip AQWIAAAAAA');
+    expect(app.equipCommand).toBe('!setequip AhQBEg');
     expect(fixture.nativeElement.textContent).toContain('Your equip command');
 
-    starlightButton?.click();
+    skylineButton?.click();
     fixture.detectChanges();
     expect(app.selectedItemIds).toEqual(
-      new Set(['sky-username', 'starlight-frame']),
+      new Set(['sky-username', 'skyline-border']),
     );
   });
 
-  it('previews supported cosmetics and ignores entry effects from older links', () => {
+  it('previews supported cosmetics and creates the compact equip command', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     fixture.detectChanges();
     const selectedItemIds = [
-      'jetbrains-mono-font',
+      'bungee-font',
       'sky-username',
-      'starlight-frame',
+      'mint-thread-border',
       'midnight-theme',
-      'slide-entry',
     ];
     const link = inventoryLink(selectedItemIds, selectedItemIds);
     app.loadInventoryFromUrl(new URL(`https://inv.bexe.dev/${link}`));
@@ -211,25 +210,12 @@ describe('AppComponent', () => {
     expect(message?.querySelector('strong')?.getAttribute('style')).toContain(
       'color: rgb(116, 192, 252)',
     );
-    expect(
-      message?.classList.contains('overlay-message--border-starlight'),
-    ).toBeTrue();
+    expect((message as HTMLElement).style.border).toBeTruthy();
     expect((message as HTMLElement).style.background).toBe('rgb(36, 48, 59)');
     expect((message as HTMLElement).style.color).toBe('rgb(248, 250, 252)');
     expect((message as HTMLElement).style.animationName).toBe('');
-    expect(app.selectedItemIds).toEqual(
-      new Set(selectedItemIds.filter((itemId) => itemId !== 'slide-entry')),
-    );
-    expect(app.equipCommand).toBe(
-      createSetEquipmentCommand(
-        selectedItemIds.filter((itemId) => itemId !== 'slide-entry'),
-      ),
-    );
-    const element = fixture.nativeElement as HTMLElement;
-    expect(
-      element.querySelector('.skin-option[data-item-id="slide-entry"]'),
-    ).toBeNull();
-    expect(element.querySelector('.preview-animation-button')).toBeNull();
+    expect(app.selectedItemIds).toEqual(new Set(selectedItemIds));
+    expect(app.equipCommand).toBe(createSetEquipmentCommand(selectedItemIds));
   });
 
   it('disables unowned skins and presents malformed links as an error', () => {
@@ -241,7 +227,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     const gildedButton = (fixture.nativeElement as HTMLElement).querySelector(
-      '.skin-option[data-item-id="gilded-edge"]',
+      '.skin-option[data-item-id="mint-thread-border"]',
     ) as HTMLButtonElement | null;
     expect(gildedButton?.disabled).toBeTrue();
 
@@ -260,7 +246,9 @@ function inventoryLink(
   equippedItemIds: string[],
 ): string {
   const bitmapLength = Math.ceil(INVENTORY_CATALOG_ITEMS.length / 8);
-  const payload = new Uint8Array(1 + bitmapLength * 2);
+  const equippedCodeOffset = 1 + bitmapLength;
+  const codeByteLength = equipmentCodeByteLength();
+  const payload = new Uint8Array(equippedCodeOffset + codeByteLength);
   payload[0] = INVENTORY_CATALOG_VERSION;
   const itemIndexes = new Map<string, number>(
     INVENTORY_CATALOG_ITEMS.map((item, index) => [item.id, index]),
@@ -269,14 +257,60 @@ function inventoryLink(
   for (const itemId of ownedItemIds) {
     setItemBit(payload, 1, itemIndexes.get(itemId));
   }
+
+  const selectedItemsBySlot = new Map<string, string>();
   for (const itemId of equippedItemIds) {
-    setItemBit(payload, 1 + bitmapLength, itemIndexes.get(itemId));
+    const item = INVENTORY_CATALOG_ITEMS.find(
+      (catalogItem) => catalogItem.id === itemId,
+    );
+    if (!item) {
+      throw new Error('The test payload contains an unknown item.');
+    }
+    if (selectedItemsBySlot.has(item.cosmetic.slot)) {
+      throw new Error('The test payload contains duplicate equipped slots.');
+    }
+    selectedItemsBySlot.set(item.cosmetic.slot, item.id);
+  }
+
+  let code = 0n;
+  for (const slot of INVENTORY_EQUIPMENT_SLOT_ORDER) {
+    const slotItems = INVENTORY_CATALOG_ITEMS.filter(
+      (item) => item.cosmetic.slot === slot,
+    );
+    const itemId = selectedItemsBySlot.get(slot);
+    const itemIndex =
+      itemId === undefined
+        ? -1
+        : slotItems.findIndex((item) => item.id === itemId);
+    code = code * BigInt(slotItems.length + 1) + BigInt(itemIndex + 1);
+  }
+  for (let byteIndex = 0; byteIndex < codeByteLength; byteIndex++) {
+    payload[equippedCodeOffset + byteIndex] = Number(code & 0xffn);
+    code >>= 8n;
   }
 
   return btoa(Array.from(payload, (byte) => String.fromCharCode(byte)).join(''))
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=+$/, '');
+}
+
+function equipmentCodeByteLength(): number {
+  let stateCount = 1n;
+  for (const slot of INVENTORY_EQUIPMENT_SLOT_ORDER) {
+    const itemCount = INVENTORY_CATALOG_ITEMS.filter(
+      (item) => item.cosmetic.slot === slot,
+    ).length;
+    stateCount *= BigInt(itemCount + 1);
+  }
+
+  let value = stateCount - 1n;
+  let byteLength = 0;
+  while (value > 0n) {
+    value >>= 8n;
+    byteLength++;
+  }
+  return Math.max(byteLength, 1);
 }
 
 function setItemBit(

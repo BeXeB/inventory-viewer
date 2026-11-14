@@ -1,6 +1,12 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 14 as const;
-export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
+export const INVENTORY_CATALOG_VERSION = 20 as const;
+export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 2 as const;
+export const INVENTORY_EQUIPMENT_SLOT_ORDER = [
+  'border',
+  'chat-theme',
+  'message-font',
+  'username-color',
+] as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
   'uncommon',
@@ -42,19 +48,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'jetbrains-mono',
+      value: 'oxanium',
     },
-    id: 'jetbrains-mono-font',
-    name: 'JetBrains Mono Betűtípus',
-    rarity: 'common',
-  },
-  {
-    cosmetic: {
-      slot: 'message-font',
-      value: 'orbitron',
-    },
-    id: 'orbitron-font',
-    name: 'Orbitron Betűtípus',
+    id: 'oxanium-font',
+    name: 'Oxanium Betűtípus',
     rarity: 'common',
   },
   {
@@ -78,10 +75,10 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'press-start-2p',
+      value: 'pixelify-sans',
     },
-    id: 'press-start-2p-font',
-    name: 'Press Start 2P Betűtípus',
+    id: 'pixelify-sans-font',
+    name: 'Pixelify Sans Betűtípus',
     rarity: 'common',
   },
   {
@@ -96,19 +93,28 @@ export const INVENTORY_CATALOG_ITEMS = [
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'agenda-fantasy',
+      value: 'metamorphous',
     },
-    id: 'agenda-fantasy-font',
-    name: 'Agenda Fantasy Betűtípus',
+    id: 'metamorphous-font',
+    name: 'Metamorphous Betűtípus',
     rarity: 'common',
   },
   {
     cosmetic: {
       slot: 'message-font',
-      value: 'bubble-fantasy',
+      value: 'coiny',
     },
-    id: 'bubble-fantasy-font',
-    name: 'Bubble Fantasy Betűtípus',
+    id: 'coiny-font',
+    name: 'Coiny Betűtípus',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'message-font',
+      value: 'baloo-2',
+    },
+    id: 'baloo-2-font',
+    name: 'Baloo 2 Betűtípus',
     rarity: 'common',
   },
   {
@@ -506,5 +512,19 @@ export const INVENTORY_CATALOG_ITEMS = [
     id: 'cosmic-current-theme',
     name: 'Kozmikus Áramlat Téma',
     rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'pirate-token',
+    },
+    dropRate: {
+      denominator: 140000,
+      numerator: 1,
+    },
+    id: 'pirate-token',
+    name: 'Pirate Token',
+    rarity: 'legendary',
+    unlocksAllItems: true,
   },
 ] as const;
