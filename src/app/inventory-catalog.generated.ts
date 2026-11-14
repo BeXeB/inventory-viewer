@@ -1,6 +1,12 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 19 as const;
-export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 1 as const;
+export const INVENTORY_CATALOG_VERSION = 20 as const;
+export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 2 as const;
+export const INVENTORY_EQUIPMENT_SLOT_ORDER = [
+  'border',
+  'chat-theme',
+  'message-font',
+  'username-color',
+] as const;
 export const INVENTORY_CATALOG_RARITIES = [
   'common',
   'uncommon',
