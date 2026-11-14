@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 22 as const;
+export const INVENTORY_CATALOG_VERSION = 25 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 2 as const;
 export const INVENTORY_EQUIPMENT_SLOT_ORDER = [
   'border',
@@ -612,5 +612,50 @@ export const INVENTORY_CATALOG_ITEMS = [
     id: 'ink-bleed-theme',
     name: 'Tintafolt Téma',
     rarity: 'legendary',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-split',
+    },
+    id: 'chromatic-split-username',
+    name: 'Kromatikus Hasadás',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-tear',
+    },
+    id: 'chromatic-tear-username',
+    name: 'Szakadt Jel',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'chromatic-ghost',
+    },
+    id: 'chromatic-ghost-username',
+    name: 'Kísérteti Visszhang',
+    rarity: 'common',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'halftone-gradient',
+    },
+    id: 'halftone-username',
+    name: 'Óceáni Rasztergomb',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'username-color',
+      value: 'halftone-sunset',
+    },
+    id: 'halftone-sunset-username',
+    name: 'Naplemente Rasztergomb',
+    rarity: 'epic',
   },
 ] as const;
