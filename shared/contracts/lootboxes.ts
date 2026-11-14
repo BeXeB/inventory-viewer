@@ -20,6 +20,10 @@ export const CHAT_BORDER_STYLES = [
   'ornate',
   'starlight',
   'pirate-token',
+  'comet-orbit',
+  'ember-rise',
+  'glitch',
+  'blood-moon',
 ] as const;
 export type ChatBorderStyle = (typeof CHAT_BORDER_STYLES)[number];
 export type ChatBorderValue = ChatBorderStyle | `#${string}`;
