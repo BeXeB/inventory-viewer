@@ -1,5 +1,5 @@
 // Generated from shared/contracts/inventory-link.ts. Do not edit manually.
-export const INVENTORY_CATALOG_VERSION = 20 as const;
+export const INVENTORY_CATALOG_VERSION = 21 as const;
 export const INVENTORY_EQUIPMENT_COMMAND_FORMAT_VERSION = 2 as const;
 export const INVENTORY_EQUIPMENT_SLOT_ORDER = [
   'border',
@@ -526,5 +526,41 @@ export const INVENTORY_CATALOG_ITEMS = [
     name: 'Pirate Token',
     rarity: 'legendary',
     unlocksAllItems: true,
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'comet-orbit',
+    },
+    id: 'comet-orbit-border',
+    name: 'Üstökös Pálya',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'ember-rise',
+    },
+    id: 'ember-rise-border',
+    name: 'Izzó Szikrák',
+    rarity: 'rare',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'glitch',
+    },
+    id: 'glitch-border',
+    name: 'Hibás Pixel',
+    rarity: 'epic',
+  },
+  {
+    cosmetic: {
+      slot: 'border',
+      value: 'blood-moon',
+    },
+    id: 'blood-moon-border',
+    name: 'Vérhold Hullám',
+    rarity: 'epic',
   },
 ] as const;

@@ -174,6 +174,115 @@ const BORDER_APPEARANCES: Record<ChatBorderStyle, BorderAppearance> = {
     boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.24)',
     themeBackgroundInset: '2px',
   },
+  'comet-orbit': {
+    border: '1px solid #bae6fd',
+    borderLeft: '2px solid #e0f2fe',
+    borderRadius: '4px',
+    boxShadow: '0 0 6px rgba(186, 230, 253, 0.35)',
+    themeBackgroundInset: '1px',
+  },
+  'ember-rise': {
+    border: '2px solid #ea580c',
+    borderLeft: '2px solid #fb923c',
+    borderRadius: '3px',
+    boxShadow: 'inset 0 0 6px rgba(234, 88, 12, 0.3)',
+    themeBackgroundInset: '2px',
+  },
+  glitch: {
+    border: '2px solid #f0abfc',
+    borderLeft: '2px solid #22d3ee',
+    borderRadius: '0',
+    boxShadow: '3px 0 0 rgba(34, 211, 238, 0.35), -3px 0 0 rgba(240, 171, 252, 0.35)',
+    themeBackgroundInset: '2px',
+  },
+  'blood-moon': {
+    border: '2px solid #991b1b',
+    borderLeft: '2px double #ef4444',
+    borderRadius: '6px',
+    boxShadow: '0 0 8px rgba(239, 68, 68, 0.4)',
+    themeBackgroundInset: '2px',
+  },
+};
+
+type SparkleKind = 'twinkle' | 'orbit' | 'rise' | 'glitch' | 'pulse';
+
+interface SparkleSpot {
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+  delay: string;
+}
+
+interface SparkleEffect {
+  kind: SparkleKind;
+  colors: string[];
+  sparkles: SparkleSpot[];
+}
+
+const BORDER_SPARKLES: Partial<Record<ChatBorderStyle, SparkleEffect>> = {
+  'pirate-token': {
+    kind: 'twinkle',
+    colors: ['#fff3b0'],
+    sparkles: [
+      { top: '0', left: '16%', delay: '0s' },
+      { top: '0', left: '42%', delay: '0.35s' },
+      { top: '0', right: '78px', delay: '0.7s' },
+      { top: '55%', right: '0', delay: '1.05s' },
+      { right: '20%', bottom: '0', delay: '1.4s' },
+      { bottom: '0', left: '34%', delay: '1.75s' },
+      { top: '-5px', left: '8%', delay: '0.18s' },
+      { top: '-5px', left: '75%', delay: '0.53s' },
+      { top: '72%', right: '-5px', delay: '0.88s' },
+      { bottom: '-5px', left: '68%', delay: '1.23s' },
+      { top: '68%', left: '-5px', delay: '1.58s' },
+    ],
+  },
+  'comet-orbit': {
+    kind: 'orbit',
+    colors: ['#e0f2fe'],
+    sparkles: [{ delay: '0s' }],
+  },
+  'ember-rise': {
+    kind: 'rise',
+    colors: ['#fb923c', '#fde047'],
+    sparkles: [
+      { bottom: '0', left: '10%', delay: '0s' },
+      { bottom: '0', left: '28%', delay: '0.5s' },
+      { bottom: '0', left: '46%', delay: '1s' },
+      { bottom: '0', left: '64%', delay: '0.25s' },
+      { bottom: '0', left: '82%', delay: '0.75s' },
+      { bottom: '0', left: '36%', delay: '1.5s' },
+    ],
+  },
+  glitch: {
+    kind: 'glitch',
+    colors: ['#f0abfc', '#22d3ee'],
+    sparkles: [
+      { top: '-3px', left: '20%', delay: '0s' },
+      { top: '40%', right: '-3px', delay: '0.3s' },
+      { bottom: '-3px', left: '55%', delay: '0.6s' },
+      { top: '60%', left: '-3px', delay: '0.9s' },
+      { top: '-3px', left: '80%', delay: '0.45s' },
+      { bottom: '-3px', left: '12%', delay: '1.2s' },
+      { top: '15%', left: '-3px', delay: '1.5s' },
+      { top: '20%', right: '-3px', delay: '1.8s' },
+    ],
+  },
+  'blood-moon': {
+    kind: 'pulse',
+    colors: ['#ef4444', '#b91c1c'],
+    sparkles: [
+      { top: '-3px', left: '-3px', delay: '0s' },
+      { top: '-3px', left: '50%', delay: '0.25s' },
+      { top: '-3px', right: '-3px', delay: '0.5s' },
+      { top: '50%', right: '-3px', delay: '0.75s' },
+      { bottom: '-3px', right: '-3px', delay: '1s' },
+      { bottom: '-3px', left: '50%', delay: '1.25s' },
+      { bottom: '-3px', left: '-3px', delay: '1.5s' },
+      { top: '50%', left: '-3px', delay: '1.75s' },
+    ],
+  },
 };
 
 interface ChatThemeStyle {
@@ -250,6 +359,11 @@ export class OverlayMessageComponent {
   get borderAppearance(): BorderAppearance | null {
     const border = this.borderStyle;
     return border === null ? null : BORDER_APPEARANCES[border];
+  }
+
+  get sparkleEffect(): SparkleEffect | null {
+    const border = this.borderStyle;
+    return border === null ? null : (BORDER_SPARKLES[border] ?? null);
   }
 
   get borderColor(): string | null {
