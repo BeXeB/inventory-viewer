@@ -167,6 +167,13 @@ const BORDER_APPEARANCES: Record<ChatBorderStyle, BorderAppearance> = {
     boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.18)',
     themeBackgroundInset: '2px',
   },
+  'pirate-token': {
+    border: '2px solid #fff',
+    borderLeft: '2px solid #fff',
+    borderRadius: '4px',
+    boxShadow: 'inset 0 0 0 1px rgba(255, 255, 255, 0.24)',
+    themeBackgroundInset: '2px',
+  },
 };
 
 interface ChatThemeStyle {
@@ -262,22 +269,22 @@ export class OverlayMessageComponent {
 
   get messageFontFamily(): string | null {
     switch (this.cosmetics['message-font']) {
-      case 'jetbrains-mono':
-        return "'JetBrains Mono', monospace";
-      case 'orbitron':
-        return "'Orbitron', sans-serif";
+      case 'oxanium':
+        return "'Oxanium', sans-serif";
       case 'bungee':
         return "'Bungee', sans-serif";
       case 'caveat':
         return "'Caveat', cursive";
-      case 'press-start-2p':
-        return "'Press Start 2P', monospace";
+      case 'pixelify-sans':
+        return "'Pixelify Sans', sans-serif";
       case 'special-elite':
         return "'Special Elite', monospace";
-      case 'agenda-fantasy':
-        return "'Agenda Fantasy', fantasy";
-      case 'bubble-fantasy':
-        return "'Bubble Fantasy', sans-serif";
+      case 'metamorphous':
+        return "'Metamorphous', serif";
+      case 'coiny':
+        return "'Coiny', sans-serif";
+      case 'baloo-2':
+        return "'Baloo 2', sans-serif";
       default:
         return null;
     }

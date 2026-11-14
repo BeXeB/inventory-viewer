@@ -1,6 +1,7 @@
 <p
   class="overlay-message"
   [class.overlay-message--border-animated]="borderAppearance?.animated === true"
+  [class.overlay-message--border-pirate-token]="borderStyle === 'pirate-token'"
   [class.overlay-message--theme-animated]="chatThemeStyle?.animatedBackground !== undefined"
   [class.overlay-message--theme-neon-night]="chatTheme === 'neon-night'"
   [style.color]="chatThemeStyle?.color ?? null"
@@ -29,4 +30,53 @@
     {{ displayName }}
   </strong>
   <span [style.font-family]="messageFontFamily"> : {{ message }} </span>
+  <img
+    class="overlay-message__pirate-mark"
+    src="assets/images/image.png"
+    alt=""
+    aria-hidden="true"
+  />
+  <span class="overlay-message__pirate-sparkles" aria-hidden="true">
+    <span class="overlay-message__pirate-sparkle" style="top: 0; left: 16%"></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: 0; left: 42%; animation-delay: 0.35s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: 0; right: 78px; animation-delay: 0.7s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: 55%; right: 0; animation-delay: 1.05s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="right: 20%; bottom: 0; animation-delay: 1.4s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="bottom: 0; left: 34%; animation-delay: 1.75s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: -5px; left: 8%; animation-delay: 0.18s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: -5px; left: 75%; animation-delay: 0.53s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: 72%; right: -5px; animation-delay: 0.88s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="bottom: -5px; left: 68%; animation-delay: 1.23s"
+    ></span>
+    <span
+      class="overlay-message__pirate-sparkle"
+      style="top: 68%; left: -5px; animation-delay: 1.58s"
+    ></span>
+  </span>
 </p>
